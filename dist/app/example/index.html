@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+  window.addEventListener('WebComponentsReady', function() {
+    supersonic.app.splashscreen.hide();
+  });
+  </script>
+  <!-- Cloud resource definition file for Supersonic Data -->
+  <script src="/cloud-resources.js"></script>
+  <meta charset="utf8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  <title>index</title>
+
+  <link rel="stylesheet" href="/components/supersonic/css/supersonic.css" />
+  <link rel="stylesheet" href="/app/common/stylesheets/application.css" />
+  <link rel="import" href="/components/supersonic/components/import.html">
+
+  <script src="http://localhost/cordova.js"></script>
+  <script src="/components/steroids-js/steroids.js"></script>
+  <script src="/components/angular/angular.js"></script>
+  <script src="/components/supersonic/supersonic.js"></script>
+  <script src="/components/webcomponentsjs/webcomponents.js"></script>
+
+  
+  <script src="/app/common.js"></script>
+  
+  <script src="/app/example.js"></script>
+  
+</head>
+<body ng-app="example">
+
+<html ng-app>
+  <head>
+  <script>
+  window.addEventListener('WebComponentsReady', function() {
+    supersonic.app.splashscreen.hide();
+  });
+  </script>
+  <!-- Cloud resource definition file for Supersonic Data -->
+  <script src="/cloud-resources.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+
+    <script src= "app.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <div class="todo-wrapper" ng-controller="TodoCtrl">
+      <h2>There are <span class="emphasis">{{getTotalTodos()}}</span> songs queued.</h2>
+      <ul>
+        <li ng-repeat="todo in todos | orderBy:'-votes'">
+        <span class="done-{{todo.done}}">{{todo.text}}</span><br>
+        <span style = "margin-left: 140px;" >Votes</span><span class="vote">{{todo.votes}}</span>
+          <button class = "vote-btn" ng-click = "upVote(todo)">+</button>
+          <button class = "vote-btn" ng-click = "downVote(todo)">-</button>
+        
+        </li>
+      </ul>
+      <form>
+        <input class="add-input" placeholder="Song" type="text" ng-model="formTodoText" ng-model-instant />
+        <button class="add-btn" ng-click="addTodo()"><h2>Add</h2></button>
+      </form>
+      
+    </div>
+  </body>
+  
+</html>
+
+</body>
+</html>

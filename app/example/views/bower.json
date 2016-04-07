@@ -1,0 +1,11 @@
+{
+    "name": "myApp",
+    "version": "0.0.1",
+    "authors": [
+        "Parminder Klair"
+    ],
+    "description": "My AngularJs Music App",
+    "dependencies": {
+        "angular-soundmanager2": "*"
+    },
+}

@@ -1,28 +1,192 @@
-<html ng-app>
-  <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+<!doctype html>
+<html lang="en" ng-app="myapp">
+	<head>
+		<title>Jukebox</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="http://code.angularjs.org/1.2.10/angular.min.js"></script>
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	</head>
+	<body ng-controller="MainCtl">
+		<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/">Jukebox</a>
+				</div>
 
-    <script src= "app.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css">
-  </head>
-  <body>
-    <div class="todo-wrapper" ng-controller="TodoCtrl">
-      <h2>There are <span class="emphasis">{{getTotalTodos()}}</span> songs queued.</h2>
-      <ul>
-        <li ng-repeat="todo in todos | orderBy:'-votes'">
-        <span class="done-{{todo.done}}">{{todo.text}}</span><br>
-        <span style = "margin-left: 140px;" >Votes</span><span class="vote">{{todo.votes}}</span>
-          <button class = "vote-btn" ng-click = "upVote(todo)">+</button>
-          <button class = "vote-btn" ng-click = "downVote(todo)">-</button>
-        
-        </li>
-      </ul>
-      <form>
-        <input class="add-input" placeholder="Song" type="text" ng-model="formTodoText" ng-model-instant />
-        <button class="add-btn" ng-click="addTodo()"><h2>Add</h2></button>
-      </form>
-      
-    </div>
-  </body>
-  
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li><a href="index.html">Home</a></li>
+						<li><a href="#">New Playlist</a></li>
+						<li><a href="#">Join Playlist</a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Playlists <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="#">Playlist 1</a></li>
+								<li><a href="#">Playlist 2</a></li>
+								<li><a href="#">Playlist 3</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="#">Remove Playlist</a></li>
+				          </ul>
+				        </li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<div class="jumbotron">
+			<h1>Party Playlist 2011!</h1>
+		</div>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-3">
+					<!--<div class="col-sm-6" ng-show="selected">-->
+					<div class="col-sm-6">
+					<table class="table">
+						<tbody ng-repeat = "s in songs" ng-if="$index == 0">
+							<tr>
+								<td colspan="2">
+									<!--<h2>{{selected.title}}</h2>-->
+									<h2>{{s.title}}</h2>
+								</td>
+								<td rowspan="2">
+									<img src="/song/views/static/img/default-album-artwork.png" align="middle">
+								</td>
+							</tr>
+							<tr colspan="2">
+								<td>
+								<dl class="dl-horizontal">
+									<dt>By:</dt>
+									<!--<dd>{{selected.artist}}</dd>-->
+									<dd>{{s.artist}}</dd>
+								</dl>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="player text-center">
+						<button type="button" id="button_bw" class="btn">
+							<i class="fa fa-fast-backward"></i>
+						</button>
+						<button type="button" id="button_play" class="btn btn-primary" ng-hide="play" ng-click="player()">
+							<i class="fa fa-play"></i>
+						</button>
+						<button type="button" id="button_pause" class="btn btn-primary" ng-show="play" ng-click="player()">
+							<i class="fa fa-pause"></i>
+						</button>
+						<button type="button" id="button_ffw" class="btn">
+							<i class="fa fa-fast-forward"></i>
+						</button>
+					</div>
+				</div>
+				<hr/>
+				<!--
+				<div class="col-sm-3" ng-show="selected">
+					<button class="btn btn-danger form-control" ng-click="remove(selected.id)">
+						<i class="fa fa-trash-o"></i> Remove this Song
+					</button>
+				</div>
+				-->
+				<div class="col-sm-3 well">
+					<hr>
+					<table class = "table table-striped">
+						<thead>
+							<tr>
+								<th>Title</th>
+								<th>Artist</th>
+								<th>Votes</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-class="{success: s.title == selected.title}" ng-repeat="s in songs" ng-if="$index>0">
+								<a =href="" ng-click="get($index)">
+									<td>{{s.title}}</td>
+								</a>
+									<td>{{s.artist}}</td>
+									<td>
+										<button class="btn btn-success-outline" ng-click="like($index)">
+											&hearts;
+										</button>
+										{{s.votes}}
+									</td>
+							</tr>
+						</tbody>
+					</table>
+					<button class="btn btn-primary pull-right" ng-click="add()">
+						<i class="fa fa-plus"></i> Add song
+					</button>
+					<br/>
+					<br/>
+				</div>
+			</div>
+		</div>
+
+	<script src="http://code.angularjs.org/1.5.3/angular-resource.min.js"></script>
+	<!-- <script src="scripts/controller.js"></script> -->
+	<script>
+		var myapp = new angular.module("myapp", []);
+
+		myapp.config(['$httpProvider', function ($httpProvider) {
+		        $httpProvider.defaults.useXDomain = true;
+		        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+		    }]);
+
+		myapp.controller("MainCtl",  function($scope, $http){
+			$http.get("http://45.55.146.198:3000/songs").then(function(response){
+				$scope.songs = response.data.songs;
+			});
+
+			$scope.selected = null;
+
+			$scope.get = function(idx){
+				$scope.selected = $scope.songs[idx];
+			}
+
+			$scope.like = function(idx){
+				// $scope.songs[idx].votes += 1;
+				 $http.put("http://45.55.146.198:3000/songs/" +$scope.songs[idx].ID+"/upvote").success(function(response){
+				 	$scope.songs = response.songs;
+				})
+			}
+
+			$scope.add = function(){
+				var title = prompt("Enter the song's title.");
+				if(title == null){
+					return;
+				}
+				var artist = prompt("Enter the sons's artist.");
+				if(artist == null){
+					return;
+				}
+				var album = prompt("Enter the song's album.");
+
+				var new_song = {
+					"Title" : title,
+					"Artist" : artist,
+					"Album" : album
+				};
+				$http.post("http://45.55.146.198:3000/songs", new_song).success(function(response){
+					$scope.songs = response.songs;
+				})
+			}
+
+			$scope.player = function(){
+				if($scope.play){
+					$scope.play = false;
+				}
+				else{
+					$scope.play = true;
+				}
+			}
+		});
+	</script>
+	<script src="static/js/ui-bootstrap-1.3.1.min.js"></script>
+
+	</body>
 </html>

@@ -1,7 +1,7 @@
 /**
  * supersonic
- * Version: 1.12.0
- * Published: 2016-03-18
+ * Version: 1.13.0
+ * Published: 2016-04-11
  * Homepage: https://github.com/AppGyver/supersonic
  * License: MIT
  */
@@ -28382,7 +28382,7 @@ if ((typeof window !== "undefined" && window !== null)) {
 
 
 
-},{"./core/app":305,"./core/data":312,"./core/debug":322,"./core/device":329,"./core/env":335,"./core/logger":336,"./core/media":338,"./core/module":344,"./core/ui":363,"./mock/steroids":375,"./mock/window":376,"./util/pick":379,"./util/without":380,"baconjs":199,"bluebird":200}],304:[function(require,module,exports){
+},{"./core/app":305,"./core/data":312,"./core/debug":322,"./core/device":329,"./core/env":335,"./core/logger":336,"./core/media":338,"./core/module":345,"./core/ui":364,"./mock/steroids":376,"./mock/window":377,"./util/pick":380,"./util/without":381,"baconjs":199,"bluebird":200}],304:[function(require,module,exports){
 var Promise;
 
 Promise = require('bluebird');
@@ -28483,7 +28483,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../../util/document-events":377,"./getLaunchURL":304,"./openURL":306,"./sleep":307,"./splashscreen":308,"./statusBar":309,"bluebird":200}],306:[function(require,module,exports){
+},{"../../util/document-events":378,"./getLaunchURL":304,"./openURL":306,"./sleep":307,"./splashscreen":308,"./statusBar":309,"bluebird":200}],306:[function(require,module,exports){
 var Promise, superify;
 
 Promise = require('bluebird');
@@ -28551,7 +28551,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../superify":351,"bluebird":200}],307:[function(require,module,exports){
+},{"../superify":352,"bluebird":200}],307:[function(require,module,exports){
 var Promise, superify;
 
 Promise = require('bluebird');
@@ -28631,7 +28631,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../superify":351,"bluebird":200}],308:[function(require,module,exports){
+},{"../superify":352,"bluebird":200}],308:[function(require,module,exports){
 var Promise, superify;
 
 Promise = require('bluebird');
@@ -28717,7 +28717,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../superify":351,"bluebird":200}],309:[function(require,module,exports){
+},{"../superify":352,"bluebird":200}],309:[function(require,module,exports){
 var Promise, superify;
 
 Promise = require('bluebird');
@@ -28815,7 +28815,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../superify":351,"bluebird":200}],310:[function(require,module,exports){
+},{"../superify":352,"bluebird":200}],310:[function(require,module,exports){
 var Bacon, deepEqual, generateUUID,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -28917,7 +28917,7 @@ module.exports = function(window) {
 
 
 
-},{"../../util/generate-uuid":378,"baconjs":199,"deep-equal":204}],311:[function(require,module,exports){
+},{"../../util/generate-uuid":379,"baconjs":199,"deep-equal":204}],311:[function(require,module,exports){
 var Promise;
 
 Promise = require('bluebird');
@@ -29440,7 +29440,7 @@ module.exports = function(name) {
 
 
 
-},{"../../../util/document-events":377,"baconjs":199,"debug":201}],315:[function(require,module,exports){
+},{"../../../util/document-events":378,"baconjs":199,"debug":201}],315:[function(require,module,exports){
 var DEFAULT_BACKEND_POLL_INTERVAL_MILLISECONDS, DEFAULT_CACHE_POLL_INTERVAL_MILLISECONDS, data, defaultPollBehavior;
 
 data = require('ag-data');
@@ -29864,7 +29864,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../superify":351,"bluebird":200}],324:[function(require,module,exports){
+},{"../superify":352,"bluebird":200}],324:[function(require,module,exports){
 var Bacon, Promise, deviceready, superify;
 
 Promise = require('bluebird');
@@ -30022,7 +30022,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../../util/document-events":377,"../superify":351,"baconjs":199,"bluebird":200}],325:[function(require,module,exports){
+},{"../../util/document-events":378,"../superify":352,"baconjs":199,"bluebird":200}],325:[function(require,module,exports){
 module.exports = function(steroids, log) {
   var bug, callbacks, override, whenPressed, _addCallback, _handler, _removeCallback;
   bug = log.debuggable("supersonic.device.buttons.back");
@@ -30279,7 +30279,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../../util/document-events":377,"../superify":351,"baconjs":199,"bluebird":200}],328:[function(require,module,exports){
+},{"../../util/document-events":378,"../superify":352,"baconjs":199,"bluebird":200}],328:[function(require,module,exports){
 var Bacon, Promise, deviceready, superify;
 
 Promise = require('bluebird');
@@ -30433,7 +30433,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../../util/document-events":377,"../superify":351,"baconjs":199,"bluebird":200}],329:[function(require,module,exports){
+},{"../../util/document-events":378,"../superify":352,"baconjs":199,"bluebird":200}],329:[function(require,module,exports){
 var Promise;
 
 Promise = require('bluebird');
@@ -30548,7 +30548,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../../util/document-events":377,"bluebird":200}],331:[function(require,module,exports){
+},{"../../util/document-events":378,"bluebird":200}],331:[function(require,module,exports){
 var Promise, deviceready;
 
 Promise = require('bluebird');
@@ -30610,7 +30610,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../../util/document-events":377,"bluebird":200}],332:[function(require,module,exports){
+},{"../../util/document-events":378,"bluebird":200}],332:[function(require,module,exports){
 var Bacon, Promise, deviceready, superify;
 
 Promise = require('bluebird');
@@ -30758,7 +30758,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../../util/document-events":377,"../superify":351,"baconjs":199,"bluebird":200}],333:[function(require,module,exports){
+},{"../../util/document-events":378,"../superify":352,"baconjs":199,"bluebird":200}],333:[function(require,module,exports){
 var Promise, deviceready;
 
 Promise = require('bluebird');
@@ -30792,7 +30792,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../../util/document-events":377,"bluebird":200}],334:[function(require,module,exports){
+},{"../../util/document-events":378,"bluebird":200}],334:[function(require,module,exports){
 var Promise, deviceready;
 
 Promise = require('bluebird');
@@ -30830,7 +30830,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../../util/document-events":377,"bluebird":200}],335:[function(require,module,exports){
+},{"../../util/document-events":378,"bluebird":200}],335:[function(require,module,exports){
 module.exports = function(logger, superglobal) {
   var _ref;
   return ((_ref = superglobal.appgyver) != null ? _ref.environment : void 0) || {
@@ -31360,7 +31360,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../../util/document-events":377,"../superify":351,"bluebird":200}],338:[function(require,module,exports){
+},{"../../util/document-events":378,"../superify":352,"bluebird":200}],338:[function(require,module,exports){
 var Promise;
 
 Promise = require('bluebird');
@@ -31374,6 +31374,46 @@ module.exports = function(steroids, log) {
 
 
 },{"./camera":337,"bluebird":200}],339:[function(require,module,exports){
+var Attach;
+
+Attach = (function() {
+  function Attach(element, namespace) {
+    var k, v, _ref;
+    this.element = element;
+    this.namespace = namespace;
+    _ref = this.element.dataset;
+    for (k in _ref) {
+      v = _ref[k];
+      this.namespace.attributes.set(k.replace(/[A-Z]/g, function(letter) {
+        return "-" + (letter.toLowerCase());
+      }), v);
+    }
+  }
+
+  Attach.prototype.namespace = function() {
+    return this.namespace;
+  };
+
+  return Attach;
+
+})();
+
+module.exports = function(attributesFactory) {
+  return function(element) {
+    return function() {
+      var attributes, instance;
+      attributes = attributesFactory();
+      instance = new Attach(element, {
+        attributes: attributes
+      });
+      return instance.namespace;
+    };
+  };
+};
+
+
+
+},{}],340:[function(require,module,exports){
 var debug, discoverSuperglobalAttributeScope, getModuleSrc, isIsolatedIframe, makeQueryParamAttributeGetter, querystring;
 
 debug = require('debug')('supersonic:module:attributes');
@@ -31495,7 +31535,7 @@ makeQueryParamAttributeGetter = function(src) {
 
 
 
-},{"debug":201,"qs":288}],340:[function(require,module,exports){
+},{"debug":201,"qs":288}],341:[function(require,module,exports){
 var compose, get, has, isFunction, merge, set;
 
 isFunction = require('lodash/lang/isFunction');
@@ -31624,7 +31664,7 @@ module.exports = function(superglobal, global) {
 
 
 
-},{"lodash/function/compose":233,"lodash/lang/isFunction":274,"lodash/object/get":280,"lodash/object/has":281,"lodash/object/merge":284,"lodash/object/set":285}],341:[function(require,module,exports){
+},{"lodash/function/compose":233,"lodash/lang/isFunction":274,"lodash/object/get":280,"lodash/object/has":281,"lodash/object/merge":284,"lodash/object/set":285}],342:[function(require,module,exports){
 module.exports = function(steroids, superglobal, global) {
   var getCurrentDriver, setCurrentDriver, _base, _base1;
   if (superglobal.ag == null) {
@@ -31658,7 +31698,7 @@ module.exports = function(steroids, superglobal, global) {
 
 
 
-},{"./drivers/mpa":342}],342:[function(require,module,exports){
+},{"./drivers/mpa":343}],343:[function(require,module,exports){
 var Promise;
 
 Promise = require('bluebird');
@@ -31790,7 +31830,7 @@ module.exports = function(steroids) {
 
 
 
-},{"bluebird":200}],343:[function(require,module,exports){
+},{"bluebird":200}],344:[function(require,module,exports){
 var Bacon, Promise, debug;
 
 Promise = require('bluebird');
@@ -32133,10 +32173,13 @@ module.exports = function(window, superglobal) {
 
 
 
-},{"baconjs":199,"bluebird":200,"debug":201}],344:[function(require,module,exports){
+},{"baconjs":199,"bluebird":200,"debug":201}],345:[function(require,module,exports){
 module.exports = function(steroids, logger, superglobal, ui, env, global, data) {
-  var attributes, cordovaSupport, drivers, router;
-  attributes = require('./attributes')(logger, global);
+  var attributes, attributesFactory, cordovaSupport, drivers, router;
+  attributes = require('./attributes');
+  attributesFactory = function() {
+    return attributes(logger, global);
+  };
   router = require('./router')(logger, env, global);
   drivers = require('./drivers')(steroids, superglobal, global);
   cordovaSupport = require('./cordova-support')(superglobal, global);
@@ -32148,19 +32191,20 @@ module.exports = function(steroids, logger, superglobal, ui, env, global, data) 
     router: router,
     drivers: drivers,
     cordovaSupport: cordovaSupport,
-    attributes: attributes,
+    attributes: attributes(logger, global),
+    attach: require('./attach')(attributesFactory),
     tabset: require('./tabset')(global),
     iframes: require('./iframes')(global, superglobal),
     layers: require('./layers')(logger, router, drivers.current.get, global),
     modal: require('./modal')(logger, router, drivers.current.get, global),
-    notifications: require('./notifications')(data, attributes, data.session),
+    notifications: require('./notifications')(data, attributesFactory(), data.session),
     transitions: require('./transitions')(steroids, ui, logger)
   };
 };
 
 
 
-},{"./attributes":339,"./cordova-support":340,"./drivers":341,"./iframes":343,"./layers":345,"./modal":346,"./notifications":347,"./router":348,"./tabset":349,"./transitions":350}],345:[function(require,module,exports){
+},{"./attach":339,"./attributes":340,"./cordova-support":341,"./drivers":342,"./iframes":344,"./layers":346,"./modal":347,"./notifications":348,"./router":349,"./tabset":350,"./transitions":351}],346:[function(require,module,exports){
 var Promise, superify;
 
 Promise = require('bluebird');
@@ -32214,7 +32258,7 @@ module.exports = function(logger, router, getDriver, global) {
 
 
 
-},{"../superify":351,"bluebird":200}],346:[function(require,module,exports){
+},{"../superify":352,"bluebird":200}],347:[function(require,module,exports){
 var Promise, superify;
 
 Promise = require('bluebird');
@@ -32272,7 +32316,7 @@ module.exports = function(logger, router, getDriver, global) {
 
 
 
-},{"../superify":351,"bluebird":200}],347:[function(require,module,exports){
+},{"../superify":352,"bluebird":200}],348:[function(require,module,exports){
 var APPGYVER_NOTIFICATION_RESOURCE_NAME, Promise, merge;
 
 Promise = require('bluebird');
@@ -32442,7 +32486,7 @@ module.exports = function(data, attributes, session) {
 
 
 
-},{"bluebird":200,"lodash/object/merge":284}],348:[function(require,module,exports){
+},{"bluebird":200,"lodash/object/merge":284}],349:[function(require,module,exports){
 var DEFAULT_VIEW_NAME, ROOT_PATH, ROUTE_PATTERN, appendQueryParams, formatPath, merge, qs,
   __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
@@ -32605,7 +32649,7 @@ merge = function(left, right) {
 
 
 
-},{"qs":288}],349:[function(require,module,exports){
+},{"qs":288}],350:[function(require,module,exports){
 var debug;
 
 debug = require('debug')('supersonic:module:iframes');
@@ -32747,7 +32791,7 @@ module.exports = function(window) {
 
 
 
-},{"debug":201}],350:[function(require,module,exports){
+},{"debug":201}],351:[function(require,module,exports){
 var Promise, superify;
 
 Promise = require('bluebird');
@@ -32780,7 +32824,7 @@ module.exports = function(steroids, ui, logger) {
 
 
 
-},{"../superify":351,"bluebird":200}],351:[function(require,module,exports){
+},{"../superify":352,"bluebird":200}],352:[function(require,module,exports){
 var Bacon, Promise,
   __slice = [].slice;
 
@@ -32853,7 +32897,7 @@ module.exports = function(namespace, logger) {
 
 
 
-},{"baconjs":199,"bluebird":200}],352:[function(require,module,exports){
+},{"baconjs":199,"bluebird":200}],353:[function(require,module,exports){
 var Promise,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -32923,7 +32967,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"bluebird":200}],353:[function(require,module,exports){
+},{"bluebird":200}],354:[function(require,module,exports){
 var Promise;
 
 Promise = require('bluebird');
@@ -32988,7 +33032,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"bluebird":200}],354:[function(require,module,exports){
+},{"bluebird":200}],355:[function(require,module,exports){
 var Promise,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -33052,7 +33096,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"bluebird":200}],355:[function(require,module,exports){
+},{"bluebird":200}],356:[function(require,module,exports){
 var Promise, parseRoute,
   __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
@@ -33319,7 +33363,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"./views/parseRoute":373,"bluebird":200}],356:[function(require,module,exports){
+},{"./views/parseRoute":374,"bluebird":200}],357:[function(require,module,exports){
 var Promise,
   __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
@@ -33467,7 +33511,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"bluebird":200}],357:[function(require,module,exports){
+},{"bluebird":200}],358:[function(require,module,exports){
 var Promise, deviceready, superify;
 
 Promise = require('bluebird');
@@ -33538,7 +33582,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../../../util/document-events":377,"../../superify":351,"bluebird":200}],358:[function(require,module,exports){
+},{"../../../util/document-events":378,"../../superify":352,"bluebird":200}],359:[function(require,module,exports){
 var Promise, deviceready, superify;
 
 Promise = require('bluebird');
@@ -33619,7 +33663,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../../../util/document-events":377,"../../superify":351,"bluebird":200}],359:[function(require,module,exports){
+},{"../../../util/document-events":378,"../../superify":352,"bluebird":200}],360:[function(require,module,exports){
 
 /*
   * @namespace supersonic.ui
@@ -33638,7 +33682,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"./alert":357,"./confirm":358,"./prompt":360,"./spinner":361}],360:[function(require,module,exports){
+},{"./alert":358,"./confirm":359,"./prompt":361,"./spinner":362}],361:[function(require,module,exports){
 var Promise, deviceready, superify;
 
 Promise = require('bluebird');
@@ -33722,7 +33766,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../../../util/document-events":377,"../../superify":351,"bluebird":200}],361:[function(require,module,exports){
+},{"../../../util/document-events":378,"../../superify":352,"bluebird":200}],362:[function(require,module,exports){
 var Promise, superify;
 
 Promise = require('bluebird');
@@ -33847,7 +33891,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../../superify":351,"bluebird":200}],362:[function(require,module,exports){
+},{"../../superify":352,"bluebird":200}],363:[function(require,module,exports){
 var Promise, superify;
 
 Promise = require('bluebird');
@@ -34301,7 +34345,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../superify":351,"bluebird":200}],363:[function(require,module,exports){
+},{"../superify":352,"bluebird":200}],364:[function(require,module,exports){
 module.exports = function(steroids, log, global, superglobal, data) {
   var dialog, layers, modal, views;
   dialog = require("./dialog")(steroids, log);
@@ -34329,7 +34373,7 @@ module.exports = function(steroids, log, global, superglobal, data) {
 
 
 
-},{"./MediaGallery":352,"./NavigationBarButton":353,"./PDFView":354,"./View":355,"./animate":356,"./dialog":359,"./drawers":362,"./initialView":364,"./isDisposable":365,"./layers":366,"./modal":367,"./navigationBar":368,"./screen":369,"./tabs":370,"./views":371}],364:[function(require,module,exports){
+},{"./MediaGallery":353,"./NavigationBarButton":354,"./PDFView":355,"./View":356,"./animate":357,"./dialog":360,"./drawers":363,"./initialView":365,"./isDisposable":366,"./layers":367,"./modal":368,"./navigationBar":369,"./screen":370,"./tabs":371,"./views":372}],365:[function(require,module,exports){
 var Promise, superify;
 
 Promise = require("bluebird");
@@ -34423,7 +34467,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../superify":351,"bluebird":200}],365:[function(require,module,exports){
+},{"../superify":352,"bluebird":200}],366:[function(require,module,exports){
 var Bacon, blockingRequests, countOngoing, generateUuid;
 
 Bacon = require('baconjs');
@@ -34509,7 +34553,7 @@ module.exports = function(global, superglobal, data, dialog, views, layers, moda
 
 
 
-},{"../../util/generate-uuid":378,"baconjs":199}],366:[function(require,module,exports){
+},{"../../util/generate-uuid":379,"baconjs":199}],367:[function(require,module,exports){
 var Promise, superify;
 
 Promise = require('bluebird');
@@ -34711,7 +34755,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../superify":351,"bluebird":200}],367:[function(require,module,exports){
+},{"../superify":352,"bluebird":200}],368:[function(require,module,exports){
 var Promise, superify;
 
 Promise = require('bluebird');
@@ -34918,7 +34962,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../superify":351,"bluebird":200}],368:[function(require,module,exports){
+},{"../superify":352,"bluebird":200}],369:[function(require,module,exports){
 var Promise, superify;
 
 Promise = require('bluebird');
@@ -35208,7 +35252,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../superify":351,"bluebird":200}],369:[function(require,module,exports){
+},{"../superify":352,"bluebird":200}],370:[function(require,module,exports){
 var Promise, superify;
 
 Promise = require('bluebird');
@@ -35311,7 +35355,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../superify":351,"bluebird":200}],370:[function(require,module,exports){
+},{"../superify":352,"bluebird":200}],371:[function(require,module,exports){
 var Promise, parseRoute, superify;
 
 Promise = require('bluebird');
@@ -35668,7 +35712,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../superify":351,"./views/parseRoute":373,"bluebird":200}],371:[function(require,module,exports){
+},{"../superify":352,"./views/parseRoute":374,"bluebird":200}],372:[function(require,module,exports){
 var Promise, superify;
 
 Promise = require('bluebird');
@@ -35845,7 +35889,7 @@ module.exports = function(steroids, log, global) {
 
 
 
-},{"../superify":351,"./View":355,"./views/current":372,"bluebird":200}],372:[function(require,module,exports){
+},{"../superify":352,"./View":356,"./views/current":373,"bluebird":200}],373:[function(require,module,exports){
 var Bacon, Promise, channel, events;
 
 Bacon = require('baconjs');
@@ -36053,7 +36097,7 @@ module.exports = function(steroids, log, global) {
 
 
 
-},{"../../../util/document-events":377,"../../data/channel":310,"baconjs":199,"bluebird":200}],373:[function(require,module,exports){
+},{"../../../util/document-events":378,"../../data/channel":310,"baconjs":199,"bluebird":200}],374:[function(require,module,exports){
 module.exports = function(location, options) {
   var module, parts, path, query, routePattern, view, whole;
   if (options == null) {
@@ -36075,7 +36119,7 @@ module.exports = function(location, options) {
 
 
 
-},{}],374:[function(require,module,exports){
+},{}],375:[function(require,module,exports){
 var createLocalStorage;
 
 module.exports = createLocalStorage = function() {
@@ -36096,7 +36140,7 @@ module.exports = createLocalStorage = function() {
 
 
 
-},{}],375:[function(require,module,exports){
+},{}],376:[function(require,module,exports){
 var __slice = [].slice;
 
 module.exports = (function() {
@@ -36194,7 +36238,7 @@ module.exports = (function() {
 
 
 
-},{}],376:[function(require,module,exports){
+},{}],377:[function(require,module,exports){
 var Window, localStorage;
 
 localStorage = require('./localStorage');
@@ -36234,7 +36278,7 @@ module.exports = Window;
 
 
 
-},{"./localStorage":374}],377:[function(require,module,exports){
+},{"./localStorage":375}],378:[function(require,module,exports){
 var Bacon, Promise;
 
 Promise = require('bluebird');
@@ -36300,7 +36344,7 @@ module.exports = {
 
 
 
-},{"baconjs":199,"bluebird":200}],378:[function(require,module,exports){
+},{"baconjs":199,"bluebird":200}],379:[function(require,module,exports){
 module.exports = function() {
   var d, uuid;
   d = new Date().getTime();
@@ -36315,7 +36359,7 @@ module.exports = function() {
 
 
 
-},{}],379:[function(require,module,exports){
+},{}],380:[function(require,module,exports){
 var pick,
   __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
@@ -36333,7 +36377,7 @@ module.exports = pick = function(keys, object) {
 
 
 
-},{}],380:[function(require,module,exports){
+},{}],381:[function(require,module,exports){
 var without,
   __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 

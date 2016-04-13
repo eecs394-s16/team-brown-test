@@ -10,7 +10,7 @@
     "tag": "v3.5.19",
     "commit": "71b1bd9a6d0b251279a234572c5e658df7b5b103"
   },
-  "_source": "git://github.com/steroidsjs/steroids-js.git",
+  "_source": "https://github.com/steroidsjs/steroids-js.git",
   "_target": "^3.5.15",
   "_originalSource": "steroids-js"
 }

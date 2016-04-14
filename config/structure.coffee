@@ -5,19 +5,19 @@ module.exports =
   # See styling options for tabs and other native components in app/common/native-styles/ios.css or app/common/native-styles/android.css
   tabs: [
     {
-      title: "Index"
+      title: "Jukebox"
       id: "index"
       location: "example#index" # Supersonic module#view type navigation
+    }
+    {
+      title: "Internet"
+      id: "internet"
+      location: "https://play.spotify.com/?utm_source=www.spotify.com&utm_medium=www_footer" # URLs are supported!
     }
     {
       title: "Settings"
       id: "settings"
       location: "example#settings"
-    }
-    {
-      title: "Internet"
-      id: "internet"
-      location: "http://google.com" # URLs are supported!
     }
   ]
 

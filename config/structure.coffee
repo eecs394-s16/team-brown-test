@@ -10,9 +10,9 @@ module.exports =
       location: "example#index" # Supersonic module#view type navigation
     }
     {
-      title: "Internet"
+      title: "Search"
       id: "internet"
-      location: "https://play.spotify.com/?utm_source=www.spotify.com&utm_medium=www_footer" # URLs are supported!
+      location: "example#search"
     }
     {
       title: "Settings"

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myapp">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Search Page</title>
+
+  <script type='text/javascript' src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://developer.spotify.com/web-api/static/css/cached.css">
+
+  <style type='text/css'>
+  body {
+    padding: 20px;
+  }
+  #search-form, .form-control {
+    margin-bottom: 20px;
+  }
+  .track {
+    margin-bottom: 10px;
+  }
+  .request-btn {
+     font-size: 0.7em;
+    }
+  }
+</style>
+
+</head>
+
+<body ng-controller="InstantSearchController">
+  <div class="container">
+    <h1>Search for a track</h1>
+    <form id="search-form">
+        <input type="text" class="form-control" ng-model="searchString" ng-change="updateResult()" placeholder="Search" />
+    </form>
+    <div id="results"></div>
+</div>
+<!-- <div id="results-template" type="text/x-handlebars-template"> -->
+
+  <div ng-repeat="i in items | searchFor:searchString">
+    <div class="track row">
+        <div class="cover pull-left col-md-3">
+            <img width="200px" ng-src="{{i.album.images[1].url}}" />
+        </div>
+        <div class="songlink col-md-9">
+            <h4>{{i.artists[0].name}} - {{i.name}}</h4>
+            <p class="track-info">
+                Album: {{i.album.name}}
+            </p>
+            <a id="requestTrack" class="request-btn btn btn-primary" ng-click="addSong(i.id)">Request Track</a>
+        </div>
+    </div>
+
+  </div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+
+<script>
+  var myapp = angular.module("myapp", []);
+
+  var searchStr = "";
+
+  myapp.filter('searchFor', function(){
+
+  // All filters must return a function. The first parameter
+  // is the data that is to be filtered, and the second is an
+  // argument that may be passed with a colon (searchFor:searchString)
+
+    return function(arr, searchString){
+      if (!!searchString)
+        searchStr = searchString.split(' ').join('+');
+      return arr;
+    };
+  });
+
+  myapp.config(['$httpProvider', function ($httpProvider) {
+            $httpProvider.defaults.useXDomain = true;
+            delete $httpProvider.defaults.headers.common['X-Requested-With'];
+        }]);
+
+  myapp.controller("InstantSearchController",function($scope, $http){
+
+    $scope.updateResult = function() {
+      if (!!searchStr) {
+        $http.get("https://api.spotify.com/v1/search?q="+searchStr+"&limit=10&type=track").then(function(response){
+          $scope.items = response.data.tracks.items;
+        });
+      }
+    }
+
+    $scope.addSong = function(trackID) {
+      $http.get("https://api.spotify.com/v1/tracks/"+trackID).then(function(response){
+        var trackToAdd = response.data;
+        var new_song = {
+          "Title" : trackToAdd.name,
+          "Artist" : trackToAdd.artists[0].name,
+          "Album" : trackToAdd.album.name
+        };
+
+        $http.post("http://45.55.146.198:3000/songs", new_song).success(function(){
+          // Pop up "{trackName} is added to the Playlist!"
+          console.log(new_song.Title + " is added to the Playlist!");
+        })
+      });
+    }
+  });
+</script>
+
+</body>
+
+
+</html>

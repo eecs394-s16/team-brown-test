@@ -19,8 +19,8 @@
     {
       "position": 1,
       "id": "internet",
-      "title": "Internet",
-      "target_url": "https://play.spotify.com/?utm_source=www.spotify.com&utm_medium=www_footer"
+      "title": "Search",
+      "target_url": "http://localhost/app/example/search.html"
     },
     {
       "position": 2,

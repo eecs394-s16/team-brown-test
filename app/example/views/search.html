@@ -9,46 +9,68 @@
 
   <style type='text/css'>
   body {
-    padding: 20px;
+    padding: 2px;
+    background: light-grey;
   }
-  #search-form, .form-control {
-    margin-bottom: 20px;
+
+  #search-bar {
+    width:95%;
+    border: 2px solid #999999;
+    border-radius: 20px;
+    font-size: 100%;
+    line-height: 100%;
+    padding-left: 8px;
+    padding-bottom: 0px;
+    margin: 20px 10px 20px 10px;
   }
-  .track {
-    margin-bottom: 10px;
+
+  #track-name {
+    margin-left: 0;
+    font-weight: bold;
+    line-height: 120%;
   }
-  .request-btn {
-     font-size: 0.7em;
-    }
+
+  #track-info {
+    margin-left: 0;
+    font-weight: lighter;
+    font-size: 80%;
+    line-height: 120%;
   }
-</style>
+
+  .cover {
+    width: 100px;
+    height: 100px;
+    margin-left:20px;
+    margin-right: 5px;
+  }
+
+  
+  </style>
 
 </head>
 
-<body ng-controller="InstantSearchController">
-  <div class="container">
-    <h1>Search for a track</h1>
-    <form id="search-form">
-        <input type="text" class="form-control" ng-model="searchString" ng-change="updateResult()" placeholder="Search" />
-    </form>
-    <div id="results"></div>
-</div>
-<!-- <div id="results-template" type="text/x-handlebars-template"> -->
+<body ng-controller="InstantSearchController" width="window.innerWidth">
+  <form class="col-xs- search-bar">
+    <!-- <h1>Search for a track</h1> -->
+    <input type="text" id = "search-bar" class="col-xs-12 form-control" ng-model="searchString" ng-change="updateResult()" placeholder="Search for songs to add to queue" />
+  </form>
 
   <div ng-repeat="i in items | searchFor:searchString">
     <div class="track row">
-        <div class="cover pull-left col-md-3">
-            <img width="200px" ng-src="{{i.album.images[1].url}}" />
+        <div class="cover col-xs-">
+            <img ng-src="{{i.album.images[1].url}}"/>
         </div>
-        <div class="songlink col-md-9">
-            <h4>{{i.artists[0].name}} - {{i.name}}</h4>
-            <p class="track-info">
-                Album: {{i.album.name}}
+        <div class="col-xs-11">
+            <p id="track-name">{{i.name}}</p>
+            <p id="track-info">
+                {{i.artists[0].name}} &middot {{i.album.name}}
             </p>
-            <a id="requestTrack" class="request-btn btn btn-primary" ng-click="addSong(i.id)">Request Track</a>
+        </div>
+        <div class="col-xs-">
+          <a ng-click="addSong(i.id)"><span class="glyphicon glyphicon-plus"></span></a>
         </div>
     </div>
-
+    <!-- <hr /> -->
   </div>
 
 
@@ -81,7 +103,7 @@
 
     $scope.updateResult = function() {
       if (!!searchStr) {
-        $http.get("https://api.spotify.com/v1/search?q="+searchStr+"&limit=10&type=track").then(function(response){
+        $http.get("https://api.spotify.com/v1/search?q="+searchStr+"&limit=15&type=track").then(function(response){
           $scope.items = response.data.tracks.items;
         });
       }
@@ -98,7 +120,17 @@
 
         $http.post("http://45.55.146.198:3000/songs", new_song).success(function(){
           // Pop up "{trackName} is added to the Playlist!"
-          console.log(new_song.Title + " is added to the Playlist!");
+              // $mdDialog.show(
+              //   $mdDialog.alert()
+              //     .parent(angular.element(document.querySelector('#popupContainer')))
+              //     .clickOutsideToClose(true)
+              //     .title(trackToAdd.name + " is Added to Queue!")
+              //     // .textContent('You can specify some description text in here.')
+              //     // .ariaLabel('Alert Dialog Demo')
+              //     .ok('Got it!')
+              //     // .targetEvent(ev)
+              // );
+          window.alert(new_song.Title + " is added to the Playlist!");
         })
       });
     }

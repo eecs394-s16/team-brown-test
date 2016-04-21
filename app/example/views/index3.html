@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en" ng-app="myapp">
+	<head>
+		<title>Jukebox</title>
+		<!-- <meta http-equiv="refresh" content="5"> -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+		<script src="/scripts/LearnMoreController.js"></script>
+	</head>
+	<body ng-controller="MainCtl" role="tabpanel">
+		<nav class="navbar navbar-inverse navbar-static-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle pull-left" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/">Jukebox</a>
+				</div>
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li><a href="index.html">Home</a></li>
+						<li><a href="#">New Playlist</a></li>
+						<li><a href="#">Join Playlist</a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Playlists <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="#">Playlist 1</a></li>
+								<li><a href="#">Playlist 2</a></li>
+								<li><a href="#">Playlist 3</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="#">Remove Playlist</a></li>
+				          </ul>
+				        </li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<div class="jumbotron">
+			<h1>Party Playlist 2016!</h1>
+		</div>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-3">
+					<!--<div class="col-sm-6" ng-show="selected">-->
+					<div class="col-sm-6">
+					<table class="table">
+						<tbody ng-repeat = "s in songs" ng-if="$index == 0">
+							<tr>
+								<td colspan="2">
+									<!--<h2>{{selected.title}}</h2>-->
+									<h2>{{s.title}}</h2>
+								</td>
+								<td rowspan="2">
+									<img src="/img/default-album-artwork.png" align="middle">
+								</td>
+							</tr>
+							<tr colspan="2">
+								<td>
+								<dl class="dl-horizontal">
+									<dt>By:</dt>
+									<!--<dd>{{selected.artist}}</dd>-->
+									<dd>{{s.artist}}</dd>
+								</dl>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="player text-center">
+						<button type="button" id="button_bw" class="btn">
+							<i class="fa fa-fast-backward"></i>
+						</button>
+						<button type="button" id="button_play" class="btn btn-primary" ng-hide="play" ng-click="player()">
+							<i class="fa fa-play"></i>
+						</button>
+						<button type="button" id="button_pause" class="btn btn-primary" ng-show="play" ng-click="player()">
+							<i class="fa fa-pause"></i>
+						</button>
+						<button type="button" id="button_ffw" class="btn">
+							<i class="fa fa-fast-forward"></i>
+						</button>
+					</div>
+				</div>
+				<hr/>
+
+				<div class="col-sm-3 well">
+					<table class = "table table-striped">
+						<thead>
+							<tr>
+								<th>Title</th>
+								<th>Artist</th>
+								<th>Votes</th>
+							</tr>
+						</thead>
+						<tbody >
+							<tr ng-class="{success: s.title == selected.title}" ng-repeat="s in songs" ng-if="$index>0">
+								<a =href="" ng-click="get($index)">
+									<td>{{s.title}}</td>
+								</a>
+									<td>{{s.artist}}</td>
+									<td>
+										<button class="btn btn-success-outline" ng-click="like($index)">
+											&hearts;
+										</button>
+										{{s.votes}}
+									</td>
+							</tr>
+						</tbody>
+					</table>
+					<button class="btn btn-primary pull-right" ng-click="add()">
+						<i class="fa fa-plus"></i> Add song
+					</button>
+					<br/>
+					<br/>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- <script src="scripts/controller.js"></script> -->
+	<script src="/scripts/MainController.js">
+
+
+		// myapp.controller("UpdateCtl", function($scope, $http, $interval){
+		// 	$interval(function(){
+		// 		$http.get("http://45.55.146.198:3000/songs").then(function(response){
+		// 			$scope.songs = response.data.songs;
+		// 		});
+		// 	}, 2000);
+		// });
+	</script>
+
+
+	</body>
+</html>

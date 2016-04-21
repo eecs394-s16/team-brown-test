@@ -27,9 +27,9 @@
 
 <body ng-controller="InstantSearchController">
   <div class="container">
-    <h1>Search for a track</h1>
+    <!-- <h2>Search for a track</h2> -->
     <form id="search-form">
-        <input type="text" class="form-control" ng-model="searchString" ng-change="updateResult()" placeholder="Search" />
+        <input type="text" class="form-control" ng-model="searchString" ng-change="updateResult()" placeholder="Search for a track" />
     </form>
     <div id="results"></div>
 </div>
@@ -38,7 +38,7 @@
   <div ng-repeat="i in items | searchFor:searchString">
     <div class="track row">
         <div class="cover pull-left col-md-3">
-            <img width="200px" ng-src="{{i.album.images[1].url}}" />
+            <img width="200px" ng-src="{{i.album.images[0].url}}" />
         </div>
         <div class="songlink col-md-9">
             <h4>{{i.artists[0].name}} - {{i.name}}</h4>

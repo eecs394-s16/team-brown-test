@@ -31,6 +31,7 @@
 				</div>
 			</tab>
 			<tab heading = "Party Playlist 2016">
+				<br><br><br>
 					<div class="jumbotron">
 						<h1>Party Playlist</h1>
 					</div>
@@ -38,13 +39,13 @@
 						<div class="row">
 							<div class="col-sm-3">
 								<!--<div class="col-sm-6" ng-show="selected">-->
-								<div class="col-sm-6">
+								<div class="col-sm-6" ng-show="selected">
 								<table class="table">
-									<tbody ng-repeat = "s in songs" ng-if="$index == 0">
+									<tbody>
 										<tr>
 											<td colspan="2">
 												<!--<h2>{{selected.title}}</h2>-->
-												<h2>{{s.title}}</h2>
+												<h2>{{selected.title}}</h2>
 											</td>
 											<td rowspan="2">
 												<img src="/img/default-album-artwork.png" align="middle">
@@ -55,7 +56,7 @@
 											<dl class="dl-horizontal">
 												<dt>By:</dt>
 												<!--<dd>{{selected.artist}}</dd>-->
-												<dd>{{s.artist}}</dd>
+												<dd>{{selected.artist}}</dd>
 											</dl>
 											</td>
 										</tr>
@@ -95,7 +96,7 @@
 									</thead>
 									<tbody >
 										<tr ng-class="{success: s.title == selected.title}" ng-repeat="s in songs" ng-if="$index>0">
-											<a =href="" ng-click="get($index)">
+											<a >
 												<td>{{s.title}}</td>
 											</a>
 												<td>{{s.artist}}</td>

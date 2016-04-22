@@ -23,16 +23,11 @@ myapp.controller("MainCtl",  function($scope, $http){
 
   $http.get("http://45.55.146.198:3000/songs").then(function(response){
     $scope.songs = response.data.songs;
+    $scope.selected = $scope.songs[0];
+    $http.delete("http://45.55.146.198:3000/songs/" + $scope.selected.ID).success(function(response){console.log(response);});
     len = response.data.songs.length;
     console.log(len);
   });
-
-  $scope.selected = null;
-
-  $scope.get = function(idx){
-    $scope.selected = $scope.songs[idx];
-  }
-
 
   var upvotedSongList = []
   for(var i=0; i<len; i++) upvotedSongList[i] = false;
@@ -71,7 +66,7 @@ myapp.controller("MainCtl",  function($scope, $http){
   }
 
   var audio = new Audio();
-  audio.src = "https://p.scdn.co/mp3-preview/a83eedd6b982d4afdc2ceaeb458f471118ad78aa";
+  audio.src = "https://p.scdn.co/mp3-preview/c58f1bc9160754337b858a4eb824a6ac2321041d";
   $scope.player = function(){
     if($scope.play){
       $scope.play = false;

@@ -8,10 +8,10 @@ myapp.config(['$httpProvider', function ($httpProvider) {
 myapp.controller("MainCtl",  function($scope, $http){
   var len  = 0;
 
-  $http.get("http://45.55.146.198:3000/songs").then(function(response){
+  var playlist_id = "2";
+  $http.get("http://45.55.146.198:3000/playlists/" + playlist_id).then(function(response){
     $scope.songs = response.data.songs;
     $scope.selected = $scope.songs[0];
-    $http.delete("http://45.55.146.198:3000/songs/" + $scope.selected.ID).success(function(response){console.log(response);});
     len = response.data.songs.length;
     console.log(len);
   });
@@ -23,36 +23,13 @@ myapp.controller("MainCtl",  function($scope, $http){
        $http.put("http://45.55.146.198:3000/songs/" +$scope.songs[idx].ID+"/upvote").success(function(response){
         $scope.songs = response.songs;
         len = response.songs.length;
-        console.log(len);
         upvotedSongList[idx] = true;
       })
     }
   }
 
-  $scope.add = function(){
-    var title = prompt("Enter the song's title.");
-    if(title == null){
-      return;
-    }
-    var artist = prompt("Enter the sons's artist.");
-    if(artist == null){
-      return;
-    }
-    var album = prompt("Enter the song's album.");
-
-    var new_song = {
-      "Title" : title,
-      "Artist" : artist,
-      "Album" : album
-    };
-    $http.post("http://45.55.146.198:3000/songs", new_song).success(function(response){
-      $scope.songs = response.songs;
-      len = response.songs.length;
-      console.log(len);
-    })
-  }
-
   var audio = new Audio();
+
   audio.src = "https://p.scdn.co/mp3-preview/c58f1bc9160754337b858a4eb824a6ac2321041d";
   $scope.player = function(){
     if($scope.play){

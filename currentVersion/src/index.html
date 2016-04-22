@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="components/supersonic/css/supersonic.css" />
+    <link rel="import" href="components/supersonic/components/import.html">
+
+    <script type="text/javascript">
+      window.cordova = window.parent.cordova
+    </script>
+
+    <script src="components/handlebars/handlebars.min.js"></script>
+
+    <script src="components/steroids-js/steroids.js"></script>
+    <script src="components/supersonic/supersonic.js"></script>
+    <script src="components/webcomponentsjs/webcomponents.js"></script>
+
+    <script src="components/momentjs/min/moment.min.js"></script>
+
+    <!-- build:js module.min.js -->
+    <script src="app/example.js"></script>
+    <!-- endbuild -->
+
+    <style>
+      /* #container keeps element's margins from overflowing
+       * and causing mis-resizing of modules in apps.
+       * Please don't remove #container!
+       */
+      #container {
+        overflow: hidden;
+        position: absolute;
+        left: 0;
+        right: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Don't remove this #container -->
+    <div id="container">
+      <!-- - - Edit body below this line - - -->
+
+      <h1>Hello Module!</h1>
+
+      <p>
+        My name is src/index.html.
+      </p>
+
+      <p>
+        It is now: <span id="current-day"></span>
+      </p>
+
+      <p>
+        Using the example date format defined in Composer 2.0,
+        the date is: <span id="example-date"></span>.
+      </p>
+
+      <p>
+        Here are my users:
+        <ul class="list">
+        <super-data-repeat model="users">
+          <li class="item">{{ username }}</li>
+        </super-data-repeat>
+        </ul>
+      </p>
+
+      <!-- - - Edit body above this line - - -->
+    </div>
+  </body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  <title>Mobile Test Harness</title>
+
+  <link rel="stylesheet" href="/components/supersonic/css/supersonic.css" />
+  <link rel="import" href="/components/supersonic/components/import.html">
+
+  <script src="/appgyver.js"></script>
+  <script src="/env.js"></script>
+
+  <script src="http://localhost/cordova.js"></script>
+
+  <script src="/components/steroids-js/steroids.js"></script>
+  <script src="/components/supersonic/supersonic.core.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<div>
+  <div id="navbar">
+    <script>
+      supersonic.ui.navigationBar.show();
+      supersonic.ui.navigationBar.update({title: "Mobile Test Harness"});
+    </script>
+  </div>
+
+  <!-- Composer 2.0 attributes can be simulated here, see usage of data-date-format -->
+  <iframe
+    data-module
+    data-date-format="MMMM Do YYYY, h:mm:ss a"
+    src="/components/supersonic-base-module/index.html"></iframe>
+
+</div>
+
+</body>
+</html>

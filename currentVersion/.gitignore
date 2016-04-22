@@ -1,0 +1,14 @@
+.DS_Store
+/dist
+/node_modules
+/bower_components
+/mobile/node_modules
+/mobile/bower_components
+.sass-cache/
+logs/
+
+config/appgyver.json
+config/env.json
+
+/.env
+/.tmp

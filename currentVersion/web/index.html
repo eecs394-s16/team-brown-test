@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  <title>Web Test Harness</title>
+
+  <!-- TODO: These are just symlinks to ../mobile/dist/ -->
+  <link rel="stylesheet" href="bower_components/supersonic/css/supersonic.css" />
+  <link rel="stylesheet" href="appgyver-modal.css" />
+  <script src="bower_components/steroids-js/steroids.js"></script>
+  <script src="bower_components/supersonic/supersonic.core.js"></script>
+  <script src="appgyver.js"></script>
+  <script src="appgyver-modal.js"></script>
+  <script src="env.js"></script>
+
+  <script>
+    supersonic.module.drivers.current.set({
+      layers: {
+        push: function(path, context) {
+          var iframe = document.createElement("IFRAME");
+          iframe.setAttribute("data-module", "");
+          iframe.setAttribute("data-module-indicate-loading", "");
+          iframe.src = path;
+          document.body.querySelectorAll("iframe[data-module]")[0].parentNode.appendChild(iframe);
+        },
+        pop: function(context) {
+          var iframes = document.body.querySelectorAll("iframe[data-module]");
+          if (iframes.length > 1) iframes[iframes.length-1].remove(); // Don't allow removal of the last iframe
+        }
+      },
+      modal: {
+        show: function(path, context) {
+          window.appgyverModal.open(path);
+        },
+        hide: function(context) {
+          window.appgyverModal.close();
+        }
+      }
+    });
+  </script>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Show module if it is the only one or the last one of many */
+    iframe[data-module] {
+      display: none !important;
+    }
+    iframe[data-module]:last-child {
+      display: block !important;
+    }
+  </style>
+</head>
+
+<body>
+
+<div>
+
+  <iframe
+    data-module
+    src="/module/index.html">
+  </iframe>
+
+</div>
+
+</body>
+</html>

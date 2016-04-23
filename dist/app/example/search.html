@@ -84,7 +84,7 @@
     margin-right: 5px;
   }
 
-  
+
   </style>
 
 </head>
@@ -152,13 +152,17 @@
     $scope.addSong = function(trackID) {
       $http.get("https://api.spotify.com/v1/tracks/"+trackID).then(function(response){
         var trackToAdd = response.data;
+        console.log(trackToAdd.id)
         var new_song = {
           "Title" : trackToAdd.name,
           "Artist" : trackToAdd.artists[0].name,
-          "Album" : trackToAdd.album.name
+          "Album" : trackToAdd.album.name,
+          "Spotify_id" : trackToAdd.id
         };
 
-        $http.post("http://45.55.146.198:3000/songs", new_song).success(function(){
+        var playlist_id = "2";
+
+        $http.post("http://45.55.146.198:3000/playlists/"+playlist_id+"/songs", new_song).success(function(){
           // Pop up "{trackName} is added to the Playlist!"
               // $mdDialog.show(
               //   $mdDialog.alert()

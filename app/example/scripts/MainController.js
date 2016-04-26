@@ -9,6 +9,7 @@ myapp.controller("MainCtl",  function($scope, $http){
 
   var len  = 0;
   $scope.playlists = {};
+  $scope.search = false;
 
   $scope.reloadSongs = function(playlist_id){
     $http.get("http://45.55.146.198:3000/playlists/" + playlist_id).then(function(response){
@@ -83,6 +84,7 @@ myapp.controller("MainCtl",  function($scope, $http){
   }
 
   $scope.add = function() {
+    $scope.search = !$scope.search;
     supersonic.logger.info("clicked add song");
   }
 

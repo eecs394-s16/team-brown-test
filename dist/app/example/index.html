@@ -52,20 +52,24 @@
 		  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 		<title>Jukebox</title>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.2/ui-bootstrap.min.js"></script>
+		<script type='text/javascript' src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
+
+		<!-- spotify css sheet can be added later -->
+	  	<!-- <link rel="stylesheet" type="text/css" href="https://developer.spotify.com/web-api/static/css/cached.css"> -->
 		<link rel="stylesheet" href="/app/common/stylesheets/bootstrap.min.css">
 		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 		
-	  <link rel="stylesheet" href="/components/supersonic/css/supersonic.css" />
-	  <link rel="stylesheet" href="/app/common/stylesheets/application.css" />
-	  <link rel="import" href="/components/supersonic/components/import.html">
+		<link rel="stylesheet" href="/components/supersonic/css/supersonic.css" />
+		<link rel="stylesheet" href="/app/common/stylesheets/application.css" />
+		<link rel="import" href="/components/supersonic/components/import.html">
 
-	  <script src="http://localhost/cordova.js"></script>
-	  <script src="/components/steroids-js/steroids.js"></script>
-	  <script src="/components/angular/angular.js"></script>
-	  <script src="/components/supersonic/supersonic.js"></script>
-	  <script src="/components/webcomponentsjs/webcomponents.js"></script>
-	  
-	  <script src="/app/example.js"></script>
+		<script src="http://localhost/cordova.js"></script>
+		<script src="/components/steroids-js/steroids.js"></script>
+		<script src="/components/angular/angular.js"></script>
+		<script src="/components/supersonic/supersonic.js"></script>
+		<script src="/components/webcomponentsjs/webcomponents.js"></script>
+		  
+		<script src="/app/example.js"></script>
 	</head>
 	<body ng-controller="MainCtl">
 		<tabset vertical="true" type="pills">
@@ -89,10 +93,17 @@
 			</tab>
 			<tab heading="{{ playlist_name }}" ng-repeat="(playlist_id, playlist_name) in playlists">
 				<br><br><br>
-					<div class="jumbotron">
+					<div class="jumbotron" >
 						<h1>{{  playlist_name  }} - <small>{{ playlist_id }}</small></h1>
 					</div>
-					<div class="container-fluid">
+					<div ng-controller="InstantSearchController" ng-show="search">
+						<h1>It's a me! {{ playlist_name }}</h1>
+						<h2>{{test}}</h2>
+						<button class="btn btn-primary pull-right" ng-click="add()">
+							<i class="fa fa-plus"></i> Add song
+						</button>
+					</div>
+					<div class="container-fluid" ng-hide="search">
 						<div class="row">
 							<div class="col-sm-3">
 								<div class="col-sm-6" ng-show="selected">

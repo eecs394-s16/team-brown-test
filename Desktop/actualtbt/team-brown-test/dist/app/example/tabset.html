@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+  window.addEventListener('WebComponentsReady', function() {
+    supersonic.app.splashscreen.hide();
+  });
+  </script>
+  <!-- Cloud resource definition file for Supersonic Data -->
+  <script src="/cloud-resources.js"></script>
+  <meta charset="utf8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  <title>tabset</title>
+
+  <link rel="stylesheet" href="/components/supersonic/css/supersonic.css" />
+  <link rel="stylesheet" href="/app/common/stylesheets/application.css" />
+  <link rel="import" href="/components/supersonic/components/import.html">
+
+  <script src="http://localhost/cordova.js"></script>
+  <script src="/components/steroids-js/steroids.js"></script>
+  <script src="/components/angular/angular.js"></script>
+  <script src="/components/supersonic/supersonic.js"></script>
+  <script src="/components/webcomponentsjs/webcomponents.js"></script>
+
+  
+  <script src="/app/common.js"></script>
+  
+  <script src="/app/example.js"></script>
+  
+</head>
+<body ng-app="example">
+
+<div ng-controller="NavCtrl" role="tabpanel">
+    <div class="container">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle pull-left" href="#" id="navigation-toggle" ng-click="toggleState()">
+                        <!-- <span class="sr-only">Toggle navigation</span> -->
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Jukebox</a>
+                </div>
+            <!--<a href="#" id="navigation-toggle" ng-click="toggleState()">Navigation</a>-->
+        </nav>
+        <ul class="sidebar" sidebar-directive="state" ng-class="tabset.classes" role="tablist">
+            <li class="navigation-items"
+                role="presentation"
+                ng-repeat="tab in tabset.tabs"
+                ng-class="{'active' : tab.active, 'disabled' : tab.disabled}">
+
+                <a href=""
+                    role="tab"
+                    ng-click="tabset.select(tab)">{{ tab.heading }}</a>
+            </li>
+        </ul>
+    </div>
+    <ng-transclude>
+    </ng-transclude>
+</div>
+
+
+</body>
+</html>

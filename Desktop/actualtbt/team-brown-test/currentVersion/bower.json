@@ -1,0 +1,10 @@
+{
+  "name": "base-module",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "supersonic": "1.x",
+    "momentjs": "2.10.2",
+    "handlebars": "~3.0.3"
+  }
+}

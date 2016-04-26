@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+  window.addEventListener('WebComponentsReady', function() {
+    supersonic.app.splashscreen.hide();
+  });
+  </script>
+  <!-- Cloud resource definition file for Supersonic Data -->
+  <script src="/cloud-resources.js"></script>
+  <meta charset="utf8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  <title>index</title>
+
+  <link rel="stylesheet" href="/components/supersonic/css/supersonic.css" />
+  <link rel="stylesheet" href="/app/common/stylesheets/application.css" />
+  <link rel="import" href="/components/supersonic/components/import.html">
+
+  <script src="http://localhost/cordova.js"></script>
+  <script src="/components/steroids-js/steroids.js"></script>
+  <script src="/components/angular/angular.js"></script>
+  <script src="/components/supersonic/supersonic.js"></script>
+  <script src="/components/webcomponentsjs/webcomponents.js"></script>
+
+  
+  <script src="/app/common.js"></script>
+  
+  <script src="/app/example.js"></script>
+  
+</head>
+<body ng-app="example">
+
+<!doctype html>
+<html lang="en" ng-app="myapp">
+	<head>
+  <script>
+  window.addEventListener('WebComponentsReady', function() {
+    supersonic.app.splashscreen.hide();
+  });
+  </script>
+  <!-- Cloud resource definition file for Supersonic Data -->
+  <script src="/cloud-resources.js"></script>
+		  <script>
+		  window.addEventListener('WebComponentsReady', function() {
+		    supersonic.app.splashscreen.hide();
+		  });
+		  </script>
+		  <!-- Cloud resource definition file for Supersonic Data
+		  <script src="/cloud-resources.js"></script>-->
+		  <meta charset="utf8">
+		  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+		<title>Jukebox</title>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.2/ui-bootstrap.min.js"></script>
+		<link rel="stylesheet" href="/app/common/stylesheets/bootstrap.min.css">
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	  	<!-- <link rel="stylesheet" type="text/css" href="https://developer.spotify.com/web-api/static/css/cached.css"> -->
+
+		
+	  <link rel="stylesheet" href="/components/supersonic/css/supersonic.css" />
+	  <link rel="stylesheet" href="/app/common/stylesheets/application.css" />
+	  <link rel="import" href="/components/supersonic/components/import.html">
+
+	  <script src="http://localhost/cordova.js"></script>
+	  <script src="/components/steroids-js/steroids.js"></script>
+	  <script src="/components/angular/angular.js"></script>
+	  <script src="/components/supersonic/supersonic.js"></script>
+	  <script src="/components/webcomponentsjs/webcomponents.js"></script>
+	  
+	</head>
+
+	<body>
+	<div ng-show="!searching.isSearching()" ng-controller="MainCtl">
+		<tabset vertical="true" type="pills">
+			<tab heading="Add New Playlist">
+				<div class="container text-center login_div carousel">
+					<br><br><br><br>
+					<form>
+						<input type="text" class="text-center" ng-model="joinPlaylistId"></input><br><br>
+						<button class="btn btn-primary" ng-click="joinPlaylist(joinPlaylistId)">
+							Join Playlist
+						</button>
+					</form>
+					<hr/>
+					<form>
+						<input type="text" class="text-center" ng-model="newPlaylistName"></input><br><br>
+						<button class="btn btn-primary" ng-click="createPlaylist(newPlaylistName)">
+							Create Playlist
+						</button>
+					</form>
+				</div>
+			</tab>
+			<tab heading="{{ playlist_name }}" ng-repeat="(playlist_id, playlist_name) in playlists">
+				<br><br><br>
+					<div class="jumbotron">
+						<h1>&nbsp{{  playlist_name  }} <small> - ID: {{ playlist_id }}</small></h1>
+					</div>
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-sm-3">
+								<div class="col-sm-6" ng-show="selected">
+								<table class="table">
+									<tbody>
+										<tr>
+											<td colspan="2">
+												<h2>{{selected.title}}</h2>
+											</td>
+											<td rowspan="2">
+												<img src="/img/default-album-artwork.png" align="middle">
+											</td>
+										</tr>
+										<tr colspan="2">
+											<td>
+											<dl class="dl-horizontal">
+												<dt>By:</dt>
+												<dd>{{selected.artist}}</dd>
+											</dl>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<button class="btn btn-default" ng-show="!admin" ng-click="admin=!admin">admin</button> 
+								<div ng-show="admin" class="player text-center">
+									<button type="button" id="button_bw" class="btn">
+										<i class="fa fa-fast-backward"></i>
+									</button>
+									<button type="button" id="button_play" class="btn btn-primary" ng-hide="play" ng-click="player()">
+										<i class="fa fa-play"></i>
+									</button>
+									<button type="button" id="button_pause" class="btn btn-primary" ng-show="play" ng-click="player()">
+										<i class="fa fa-pause"></i>
+									</button>
+									<button type="button" id="button_ffw" class="btn">
+										<i class="fa fa-fast-forward"></i>
+									</button>
+								</div>
+							</div>
+							<hr/>
+							<div class="col-sm-3 well">
+								<table class = "table table-striped">
+									<thead>
+										<tr>
+											<th>Title</th>
+											<th>Artist</th>
+											<th>Votes</th>
+										</tr>
+									</thead>
+									<tbody >
+										<tr ng-class="{success: s.title == selected.title}" ng-repeat="s in songs">
+											<a >
+												<td>{{s.title}}</td>
+											</a>
+												<td>{{s.artist}}</td>
+												<td>
+													<button class="btn btn-success-outline" ng-click="like($index)">
+														&hearts;
+													</button>
+													{{s.votes}}
+												</td>
+										</tr>
+									</tbody>
+								</table>
+								<button class="btn btn-primary pull-right" ng-click="searching.reverse()">
+									<i class="fa fa-plus"></i> Add song
+								</button>
+								<button class="btn btn-primary pull-left" ng-click="reloadSongs(playlist_id)">
+									Reload
+								</button>
+								<br/>
+								<br/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</tab>
+		</tabset>
+	</div>
+
+	<div id= "search-body" ng-show = "searching.isSearching()" ng-controller="InstantSearchController" width="window.innerWidth">
+		<style scoped>
+/*        	<link rel="stylesheet" type="text/css" href="https://developer.spotify.com/web-api/static/css/cached.css">*/
+    	</style>
+	  <form class="col-xs- search-bar">
+	    <!-- <h1>Search for a track</h1> -->
+	    <input type="text" id = "search-bar" class="col-xs-12 form-control" ng-model="searchString" ng-change="updateResult()" placeholder="Search for songs to add to queue" />
+	  </form>
+	  <button class = "btn btn-default" ng-click="searching.reverse()">Go Back to Playlist</button>
+	  <div ng-repeat="i in items | searchFor:searchString">
+	    <div class="track row">
+	        <div class="cover-album col-xs-">
+	            <img ng-src="{{i.album.images[1].url}}"/>
+	        </div>
+	        <div class="col-xs-11">
+	            <p id="track-name">{{i.name}}</p>
+	            <p id="track-info">
+	                {{i.artists[0].name}} &middot {{i.album.name}}
+	            </p>
+	        </div>
+	        <div class="col-xs-">
+	          <a ng-click="addSong(i.id)"><span class="glyphicon glyphicon-plus"></span></a>
+	        </div>
+	    </div>
+	  </div>
+	</div>
+	</body>
+ </html>
+
+
+</body>
+</html>

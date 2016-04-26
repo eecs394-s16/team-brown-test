@@ -46,13 +46,16 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.1/ui-bootstrap-1.3.1.min.js"></script>
+		<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.4.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 		<script src="http://code.angularjs.org/1.5.3/angular.min.js"></script>
 		<script src="http://code.angularjs.org/1.5.3/angular-resource.min.js"></script>
 		<link rel="stylesheet" href="/app/common/stylesheets/bootstrap.min.css">
 		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+		
 	</head>
+	
 	<body ng-controller="MainCtl">
 		<tabset vertical="true" type="pills">
 			<tab heading="Add New Playlist">
@@ -65,10 +68,21 @@
 						</button>
 					</form>
 					<hr/>
-					<button class="btn btn-primary">
-						Create Playlist
+					
+						<button class="btn btn-primary" ng-click = "openModal()">
+							Create Playlist
 					</button>
+					<div class="modalBackdrop" ng-show="flag.modalOpen">
+					<div class="modalModal" ng-show="flag.modalOpen">
+						<form>
+							<h4>Enter Playlist Name:</h4>
+							<input id = "plistName" type = "text" placeholder = "Name"></input>
+							<button class="btn btn-primary" ng-click = "submitModal()">Submit</button>
+						</form>
+					</div>
 				</div>
+					</div>
+				
 			</tab>
 			<tab heading = "Party Playlist 2016">
 				<br><br><br>

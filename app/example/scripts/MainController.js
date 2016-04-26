@@ -5,7 +5,8 @@ myapp.config(['$httpProvider', function ($httpProvider) {
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
     }]);
 
-myapp.controller("MainCtl",  function($scope, $http){
+
+myapp.controller("MainCtl", function($scope, $http){
   var len  = 0;
 
   var playlist_id = "2";
@@ -26,7 +27,7 @@ myapp.controller("MainCtl",  function($scope, $http){
         upvotedSongList[idx] = true;
       })
     }
-  }
+  };
 
   var audio = new Audio();
 
@@ -40,9 +41,36 @@ myapp.controller("MainCtl",  function($scope, $http){
       $scope.play = true;
       audio.play();
     }
-  }
+  };
+
+ $scope.flag = {
+  modalOpen: false
+};
+
+$scope.closeModal = function() {
+  // optionally do something beforehand
+  $scope.flag.modalOpen = false;
+};
+$scope.openModal = function(){
+
+  $scope.flag.modalOpen = true;
+}
+
+$scope.submitModal = function(){
+
+var plistName = $scope.plistName;
+
+$http.post("http://45.55.146.198:3000/playlists/?name="+plistName).then(function(response){
+    var pName = response.data.name;
+    console.log(pName);
+  });
+
+  $scope.flag.modalOpen = false;
+}
 
 });
+
+
 
 myapp.controller('NavCtrl', function($scope) {
   $scope.state = false;

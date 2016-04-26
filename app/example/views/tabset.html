@@ -20,7 +20,7 @@
 
                 <a href=""
                     role="tab"
-                    ng-click="tabset.select(tab)">{{ tab.heading }}</a>
+                    ng-click="tabset.select(tab); $emit('reloadSongs', tab.playlistID)">{{ tab.heading }}</a>
             </li>
         </ul>
     </div>

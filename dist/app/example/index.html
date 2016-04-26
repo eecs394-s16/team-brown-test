@@ -89,13 +89,13 @@
 			</tab>
 			<tab heading="{{ playlist_name }}" ng-repeat="(playlist_id, playlist_name) in playlists">
 				<br><br><br>
-					<div class="jumbotron">
-						<h1>{{  playlist_name  }} - <small>{{ playlist_id }}</small></h1>
-					</div>
-					<div class="container-fluid">
-						<div class="row">
-							<div class="col-sm-3">
-								<div class="col-sm-6" ng-show="selected">
+				<div class="jumbotron">
+					<h1>{{  playlist_name  }} - <small>{{ playlist_id }}</small></h1>
+				</div>
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="col-xs-12" ng-show="selected">
 								<table class="table">
 									<tbody>
 										<tr>
@@ -103,7 +103,7 @@
 												<h2>{{selected.title}}</h2>
 											</td>
 											<td rowspan="2">
-												<img src="/img/default-album-artwork.png" align="middle">
+												<img height="100px" width="100px" src="{{ selected.album_art }}" align="middle">
 											</td>
 										</tr>
 										<tr colspan="2">
@@ -132,7 +132,8 @@
 								</div>
 							</div>
 							<hr/>
-							<div class="col-sm-3 well">
+							<!-- <div class="col-sm-3 well"> -->
+							<div class="col-xs-12 well">
 								<table class = "table table-striped">
 									<thead>
 										<tr>
@@ -170,17 +171,6 @@
 				</div>
 			</tab>
 		</tabset>
-
-	<script>
-
-	</script>
-	<!--
-	<script src="/scripts/MainController.js"></script>
-	<script src="/scripts/angular-spotify.js"></script>
-	-->
-
-
-
 	</body>
 </html>
 

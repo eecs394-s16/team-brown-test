@@ -89,6 +89,7 @@ myapp.controller("MainCtl",  function($scope, $http){
     $http.get("http://45.55.146.198:3000/playlists/" + playlist_id).then(function(response){
       $scope.songs = response.data.songs;
       $scope.selected = response.data.active_song;
+      // $scope.selected = response.data.songs[0];
       var playlist_name = response.data.name;
       var playlist_id = response.data.id;
       len = response.data.songs.length;
@@ -135,15 +136,15 @@ myapp.controller("MainCtl",  function($scope, $http){
       supersonic.logger.error("ERROR Cannot Create Playlist: " + response.data);
     });
   }
-  // $scope.deletePlaylist = function(playlist_id){
-  //   var req = {
-  //     method = 'DELETE',
-  //     url: "http://45.55.146.198:3000/playlists/" + playlist_id
-  //   }
-  //   $http(req).then(function(response){
-  //     console.log("Playlist delete response: " + response.data);
-  //   });
-  // }
+
+  $scope.deletePlaylist = function(playlist_id){
+
+    $http.delete("http://45.55.146.198:3000/playlists/" + playlist_id).then(function (response){
+      supersonic.logger.info("Playlist " + response.data.deleted + " deleted successfully");
+    }, function (response){
+      supersonic.logger.error("ERROR Could not delete playlist");
+    });
+  }
 
   var upvotedSongList = []
   for(var i=0; i<len; i++) upvotedSongList[i] = false;
@@ -218,6 +219,13 @@ myapp.directive('tab', function() {
         })
       }
 
+      scope.playlistID = false
+      if(attr.playlistid) {
+        attr.$observe('playlistid', function(value) {
+          scope.playlistID = value
+        })
+      }
+
       tabsetCtrl.addTab(scope)
     }
   }
@@ -263,6 +271,12 @@ myapp.directive('tabset', function() {
       self.select = function(selectedTab) {
 
         if (selectedTab.disabled) { return }
+
+        if (selectedTab.playlistID) {
+          supersonic.logger.info("NOAH selectedTab playlistID: " + selectedTab.playlistID);
+        } else {
+          supersonic.logger.info("NOAH no playlistID");
+        }
 
         angular.forEach(self.tabs, function(tab){
           if(tab.active && tab != selectedTab) {

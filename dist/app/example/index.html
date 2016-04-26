@@ -41,17 +41,31 @@
   </script>
   <!-- Cloud resource definition file for Supersonic Data -->
   <script src="/cloud-resources.js"></script>
+		  <script>
+		  window.addEventListener('WebComponentsReady', function() {
+		    supersonic.app.splashscreen.hide();
+		  });
+		  </script>
+		  <!-- Cloud resource definition file for Supersonic Data
+		  <script src="/cloud-resources.js"></script>-->
+		  <meta charset="utf8">
+		  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 		<title>Jukebox</title>
-		<!-- <meta http-equiv="refresh" content="5"> -->
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.1/ui-bootstrap-1.3.1.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-		<script src="http://code.angularjs.org/1.5.3/angular.min.js"></script>
-		<script src="http://code.angularjs.org/1.5.3/angular-resource.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.2/ui-bootstrap.min.js"></script>
 		<link rel="stylesheet" href="/app/common/stylesheets/bootstrap.min.css">
 		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+		
+	  <link rel="stylesheet" href="/components/supersonic/css/supersonic.css" />
+	  <link rel="stylesheet" href="/app/common/stylesheets/application.css" />
+	  <link rel="import" href="/components/supersonic/components/import.html">
+
+	  <script src="http://localhost/cordova.js"></script>
+	  <script src="/components/steroids-js/steroids.js"></script>
+	  <script src="/components/angular/angular.js"></script>
+	  <script src="/components/supersonic/supersonic.js"></script>
+	  <script src="/components/webcomponentsjs/webcomponents.js"></script>
+	  
+	  <script src="/app/example.js"></script>
 	</head>
 	<body ng-controller="MainCtl">
 		<tabset vertical="true" type="pills">
@@ -59,32 +73,33 @@
 				<div class="container text-center login_div carousel">
 					<br><br><br><br>
 					<form>
-						<input type="text"></input><br><br>
-						<button class="btn btn-primary">
+						<input type="text" class="text-center" ng-model="joinPlaylistId"></input><br><br>
+						<button class="btn btn-primary" ng-click="joinPlaylist(joinPlaylistId)">
 							Join Playlist
 						</button>
 					</form>
 					<hr/>
-					<button class="btn btn-primary">
-						Create Playlist
-					</button>
+					<form>
+						<input type="text" class="text-center" ng-model="newPlaylistName"></input><br><br>
+						<button class="btn btn-primary" ng-click="createPlaylist(newPlaylistName)">
+							Create Playlist
+						</button>
+					</form>
 				</div>
 			</tab>
-			<tab heading = "Party Playlist 2016">
+			<tab heading="{{ playlist_name }}" ng-repeat="(playlist_id, playlist_name) in playlists">
 				<br><br><br>
 					<div class="jumbotron">
-						<h1>Party Playlist</h1>
+						<h1>{{  playlist_name  }} - <small>{{ playlist_id }}</small></h1>
 					</div>
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-sm-3">
-								<!--<div class="col-sm-6" ng-show="selected">-->
 								<div class="col-sm-6" ng-show="selected">
 								<table class="table">
 									<tbody>
 										<tr>
 											<td colspan="2">
-												<!--<h2>{{selected.title}}</h2>-->
 												<h2>{{selected.title}}</h2>
 											</td>
 											<td rowspan="2">
@@ -95,7 +110,6 @@
 											<td>
 											<dl class="dl-horizontal">
 												<dt>By:</dt>
-												<!--<dd>{{selected.artist}}</dd>-->
 												<dd>{{selected.artist}}</dd>
 											</dl>
 											</td>
@@ -118,13 +132,6 @@
 								</div>
 							</div>
 							<hr/>
-							<!--
-							<div class="col-sm-3" ng-show="selected">
-								<button class="btn btn-danger form-control" ng-click="remove(selected.id)">
-									<i class="fa fa-trash-o"></i> Remove this Song
-								</button>
-							</div>
-							-->
 							<div class="col-sm-3 well">
 								<table class = "table table-striped">
 									<thead>
@@ -135,7 +142,7 @@
 										</tr>
 									</thead>
 									<tbody >
-										<tr ng-class="{success: s.title == selected.title}" ng-repeat="s in songs" ng-if="$index>0">
+										<tr ng-class="{success: s.title == selected.title}" ng-repeat="s in songs">
 											<a >
 												<td>{{s.title}}</td>
 											</a>
@@ -152,6 +159,9 @@
 								<button class="btn btn-primary pull-right" ng-click="add()">
 									<i class="fa fa-plus"></i> Add song
 								</button>
+								<button class="btn btn-primary pull-left" ng-click="reloadSongs(playlist_id)">
+									Reload
+								</button>
 								<br/>
 								<br/>
 							</div>
@@ -159,14 +169,15 @@
 					</div>
 				</div>
 			</tab>
-			<tab heading="Tab 3" disable="ture">
-				One more!
-			</tab>
 		</tabset>
 
+	<script>
+
+	</script>
+	<!--
 	<script src="/scripts/MainController.js"></script>
-	<script src="/scripts/ui-bootstrap-1.3.1.min.js"></script>
 	<script src="/scripts/angular-spotify.js"></script>
+	-->
 
 
 

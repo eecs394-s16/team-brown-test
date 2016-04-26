@@ -81,15 +81,69 @@ myapp.config(['$httpProvider', function ($httpProvider) {
     }]);
 
 myapp.controller("MainCtl",  function($scope, $http){
-  var len  = 0;
 
-  var playlist_id = "2";
-  $http.get("http://45.55.146.198:3000/playlists/" + playlist_id).then(function(response){
-    $scope.songs = response.data.songs;
-    $scope.selected = $scope.songs[0];
-    len = response.data.songs.length;
-    console.log(len);
-  });
+  var len  = 0;
+  $scope.playlists = {};
+
+  $scope.reloadSongs = function(playlist_id){
+    $http.get("http://45.55.146.198:3000/playlists/" + playlist_id).then(function(response){
+      $scope.songs = response.data.songs;
+      $scope.selected = response.data.active_song;
+      var playlist_name = response.data.name;
+      var playlist_id = response.data.id;
+      len = response.data.songs.length;
+      console.log(len);
+
+      $scope.playlists[playlist_id] = playlist_name;
+      supersonic.logger.info("Reloaded songs for playlists :" + $scope.playlists);
+
+    }, function(response){
+      supersonic.logger.error("ERROR Could not reload songs. name: " + playlist_name + " id: " + playlist_id);
+    });
+  }
+
+  // $scope.reloadSongs();
+
+  $scope.joinPlaylist = function(playlist_id){
+
+    $http.get("http://45.55.146.198:3000/playlists/" + playlist_id).then(function (response){
+      playlist_id = response.data.id;
+      playlist_name = response.data.name;
+      $scope.songs = response.data.songs;
+      $scope.selected = response.data.active_song;
+
+      supersonic.logger.info("Joined playlist: " + playlist_name + " id: " + playlist_id);
+      $scope.playlists[playlist_id] = playlist_name;
+    }, function(response){
+      supersonic.logger.error("ERROR unable to join playlist: " + response.data);
+    });
+  }
+
+  $scope.createPlaylist = function(playlist_name){
+    var newPlaylist = {
+      "name" : playlist_name
+    };
+    $http.post("http://45.55.146.198:3000/playlists", newPlaylist).then(function (response){
+      var playlist_id = response.data.id;
+      var playlist_name = response.data.name;
+      $scope.songs = response.data.songs;
+      $scope.selected = response.data.active_song;
+
+      supersonic.logger.info("Created playlist " + playlist_name + " id " + playlist_id);
+      $scope.playlists[playlist_id] = playlist_name;
+    }, function (response){
+      supersonic.logger.error("ERROR Cannot Create Playlist: " + response.data);
+    });
+  }
+  // $scope.deletePlaylist = function(playlist_id){
+  //   var req = {
+  //     method = 'DELETE',
+  //     url: "http://45.55.146.198:3000/playlists/" + playlist_id
+  //   }
+  //   $http(req).then(function(response){
+  //     console.log("Playlist delete response: " + response.data);
+  //   });
+  // }
 
   var upvotedSongList = []
   for(var i=0; i<len; i++) upvotedSongList[i] = false;
@@ -101,6 +155,10 @@ myapp.controller("MainCtl",  function($scope, $http){
         upvotedSongList[idx] = true;
       })
     }
+  }
+
+  $scope.add = function() {
+    supersonic.logger.info("clicked add song");
   }
 
   var audio = new Audio();
@@ -148,7 +206,7 @@ myapp.directive('tab', function() {
     template: '<div role="tabpanel" ng-show="active" ng-transclude></div>',
     require: '^tabset',
     scope: {
-      heading:'@'
+      heading:'@',
     },
     link: function(scope, elem, attr, tabsetCtrl) {
       scope.active = false
@@ -211,7 +269,9 @@ myapp.directive('tabset', function() {
           }
         })
 
-        selectedTab.active = true;
+      selectedTab.active = true;
+      //$parent.reloadSongs("2");
+
       }
 
     }

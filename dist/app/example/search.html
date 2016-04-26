@@ -152,17 +152,20 @@
     $scope.addSong = function(trackID) {
       $http.get("https://api.spotify.com/v1/tracks/"+trackID).then(function(response){
         var trackToAdd = response.data;
-        console.log(trackToAdd.id)
+        console.log(trackToAdd.id);
+        supersonic.logger.info(trackToAdd.id);
         var new_song = {
-          "Title" : trackToAdd.name,
-          "Artist" : trackToAdd.artists[0].name,
-          "Album" : trackToAdd.album.name,
-          "Spotify_id" : trackToAdd.id
+          "title" : String(trackToAdd.name),
+          "artist" : String(trackToAdd.artists[0].name),
+          "album" : String(trackToAdd.album.name),
+          "album_art" : String(trackToAdd.album.images[0]),
+          "spotify_id" : String(trackToAdd.id)
         };
 
         var playlist_id = "2";
-
-        $http.post("http://45.55.146.198:3000/playlists/"+playlist_id+"/songs", new_song).success(function(){
+        var post_url = "http://45.55.146.198:3000/playlists/"+playlist_id+"/songs";
+        supersonic.logger.info("post url: " + post_url);
+        $http.post(post_url, new_song).then(function(response){
           // Pop up "{trackName} is added to the Playlist!"
               // $mdDialog.show(
               //   $mdDialog.alert()
@@ -174,8 +177,15 @@
               //     .ok('Got it!')
               //     // .targetEvent(ev)
               // );
-          window.alert(new_song.Title + " is added to the Playlist!");
-        })
+          var new_song = response.data;
+          supersonic.logger.info("added song: " + String(new_song));
+          // window.alert(new_song.Title + " is added to the Playlist!");
+        }, function(response){
+          var new_song = response.data;
+          supersonic.logger.error("ERROR failed to add song: " + String(new_song));
+        });
+      }, function(response){
+        supersonic.logger.error("ERROR failed to get spotify track: " + response.data);
       });
     }
   });

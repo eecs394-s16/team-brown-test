@@ -18,6 +18,8 @@
 	  	<!-- <link rel="stylesheet" type="text/css" href="https://developer.spotify.com/web-api/static/css/cached.css"> -->
 		<link rel="stylesheet" href="/app/common/stylesheets/bootstrap.min.css">
 		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	  	<!-- <link rel="stylesheet" type="text/css" href="https://developer.spotify.com/web-api/static/css/cached.css"> -->
+
 		
 		<link rel="stylesheet" href="/components/supersonic/css/supersonic.css" />
 		<link rel="stylesheet" href="/app/common/stylesheets/application.css" />
@@ -30,8 +32,11 @@
 		<script src="/components/webcomponentsjs/webcomponents.js"></script>
 		  
 		<script src="/app/example.js"></script>
+
 	</head>
-	<body ng-controller="MainCtl">
+
+	<body>
+	<div ng-show="!searching.isSearching()" ng-controller="MainCtl">
 		<tabset vertical="true" type="pills">
 			<tab heading="Add New Playlist">
 				<div class="container text-center login_div carousel">
@@ -53,8 +58,8 @@
 			</tab>
 			<tab heading="{{ playlist_name }}" ng-repeat="(playlist_id, playlist_name) in playlists">
 				<br><br><br>
-					<div class="jumbotron" >
-						<h1>{{  playlist_name  }} - <small>{{ playlist_id }}</small></h1>
+					<div class="jumbotron">
+						<h1>&nbsp{{  playlist_name  }} <small> - ID: {{ playlist_id }}</small></h1>
 					</div>
 					<div ng-controller="InstantSearchController" ng-show="search">
 						<h1>It's a me! {{ playlist_name }}</h1>
@@ -87,7 +92,8 @@
 										</tr>
 									</tbody>
 								</table>
-								<div class="player text-center">
+								<button class="btn btn-default" ng-show="!admin" ng-click="admin=!admin">admin</button> 
+								<div ng-show="admin" class="player text-center">
 									<button type="button" id="button_bw" class="btn">
 										<i class="fa fa-fast-backward"></i>
 									</button>
@@ -127,7 +133,7 @@
 										</tr>
 									</tbody>
 								</table>
-								<button class="btn btn-primary pull-right" ng-click="add()">
+								<button class="btn btn-primary pull-right" ng-click="searching.reverse()">
 									<i class="fa fa-plus"></i> Add song
 								</button>
 								<button class="btn btn-primary pull-left" ng-click="reloadSongs(playlist_id)">
@@ -141,16 +147,33 @@
 				</div>
 			</tab>
 		</tabset>
+	</div>
 
-	<script>
-
-	</script>
-	<!--
-	<script src="/scripts/MainController.js"></script>
-	<script src="/scripts/angular-spotify.js"></script>
-	-->
-
-
-
+	<div id= "search-body" ng-show = "searching.isSearching()" ng-controller="InstantSearchController" width="window.innerWidth">
+		<style scoped>
+/*        	<link rel="stylesheet" type="text/css" href="https://developer.spotify.com/web-api/static/css/cached.css">*/
+    	</style>
+	  <form class="col-xs- search-bar">
+	    <!-- <h1>Search for a track</h1> -->
+	    <input type="text" id = "search-bar" class="col-xs-12 form-control" ng-model="searchString" ng-change="updateResult()" placeholder="Search for songs to add to queue" />
+	  </form>
+	  <button class = "btn btn-default" ng-click="searching.reverse()">Go Back to Playlist</button>
+	  <div ng-repeat="i in items | searchFor:searchString">
+	    <div class="track row">
+	        <div class="cover-album col-xs-">
+	            <img ng-src="{{i.album.images[1].url}}"/>
+	        </div>
+	        <div class="col-xs-11">
+	            <p id="track-name">{{i.name}}</p>
+	            <p id="track-info">
+	                {{i.artists[0].name}} &middot {{i.album.name}}
+	            </p>
+	        </div>
+	        <div class="col-xs-">
+	          <a ng-click="addSong(i.id)"><span class="glyphicon glyphicon-plus"></span></a>
+	        </div>
+	    </div>
+	  </div>
+	</div>
 	</body>
-</html>
+ </html>

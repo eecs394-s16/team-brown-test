@@ -1,15 +1,48 @@
 var myapp = new angular.module("myapp", []);
 
+myapp.service('currentPlaylist', function () {
+        var currentPlaylistID = 1;
+
+        return {
+            getProperty: function () {
+                return currentPlaylistID;
+            },
+            setProperty: function(playlistID) {
+                currentPlaylistID = playlistID;
+            }
+        };
+    });
+
+myapp.service('searching', function () {
+        var searching = false;
+
+        return {
+            isSearching: function () {
+                supersonic.logger.info(searching + " is returned.");
+                return searching;
+            },
+            reverse: function () {
+                supersonic.logger.info(searching + " is going to be reversed.");
+
+                searching = ! searching;
+                return searching;
+            }
+        };
+    });
+
 myapp.config(['$httpProvider', function ($httpProvider) {
         $httpProvider.defaults.useXDomain = true;
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
     }]);
 
-myapp.controller("MainCtl",  function($scope, $http){
+myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching){
 
   var len  = 0;
   $scope.playlists = {};
   $scope.search = false;
+
+  $scope.searching = searching;
+  $scope.admin = false;
 
   $scope.reloadSongs = function(playlist_id){
     $http.get("http://45.55.146.198:3000/playlists/" + playlist_id).then(function(response){
@@ -18,8 +51,10 @@ myapp.controller("MainCtl",  function($scope, $http){
       var playlist_name = response.data.name;
       var playlist_id = response.data.id;
       len = response.data.songs.length;
-      console.log(len);
-
+      // console.log(len);
+      // supersonic.logger.info(currentPlaylist.getProperty() + " should be null.");
+      currentPlaylist.setProperty(playlist_id);
+      supersonic.logger.info("Current Playlist ID set to " + currentPlaylist.getProperty() + ".");
       $scope.playlists[playlist_id] = playlist_name;
       supersonic.logger.info("Reloaded songs for playlists :" + $scope.playlists);
 
@@ -40,7 +75,11 @@ myapp.controller("MainCtl",  function($scope, $http){
 
       supersonic.logger.info("Joined playlist: " + playlist_name + " id: " + playlist_id);
       $scope.playlists[playlist_id] = playlist_name;
+      currentPlaylist.setProperty(playlist_id);
+      supersonic.logger.info("Current Playlist ID set to " + currentPlaylist.getProperty() + ".");
+      window.alert(playlist_name + " joined.")
     }, function(response){
+      window.alert("Playlist ID doesn't exist.");
       supersonic.logger.error("ERROR unable to join playlist: " + response.data);
     });
   }
@@ -57,7 +96,11 @@ myapp.controller("MainCtl",  function($scope, $http){
 
       supersonic.logger.info("Created playlist " + playlist_name + " id " + playlist_id);
       $scope.playlists[playlist_id] = playlist_name;
+      currentPlaylist.setProperty(playlist_id);
+      supersonic.logger.info("Current Playlist ID set to " + currentPlaylist.getProperty() + ".");
+      window.alert(playlist_name + " created. Join ID: " + playlist_id);
     }, function (response){
+      window.alert("Error creating playlist.");
       supersonic.logger.error("ERROR Cannot Create Playlist: " + response.data);
     });
   }
@@ -149,15 +192,17 @@ myapp.directive('tab', function() {
     }
   }
 });
+
 myapp.directive('tabset', function() {
   return {
     restrict: 'E',
     transclude: true,
-    scope: {
-      type:'@',
-      vertical:'@',
-      justified:'@',
-    },
+    // scope: {
+    //   type:'@',
+    //   vertical:'@',
+    //   justified:'@',
+    // },
+    scope: false,
     templateUrl: 'tabset.html',
     bindToController: true,
     controllerAs: 'tabset',
@@ -197,10 +242,87 @@ myapp.directive('tabset', function() {
         })
 
       selectedTab.active = true;
-      //$parent.reloadSongs("2");
+      // $parent.reloadSongs("2");
 
       }
 
     }
   }
 });
+
+
+  var searchStr = "";
+
+  myapp.filter('searchFor', function(){
+
+  // All filters must return a function. The first parameter
+  // is the data that is to be filtered, and the second is an
+  // argument that may be passed with a colon (searchFor:searchString)
+
+    return function(arr, searchString){
+      if (!!searchString)
+        searchStr = searchString.split(' ').join('+');
+      return arr;
+    };
+  });
+
+  // myapp.config(['$httpProvider', function ($httpProvider) {
+  //           $httpProvider.defaults.useXDomain = true;
+  //           delete $httpProvider.defaults.headers.common['X-Requested-With'];
+  //       }]);
+
+  myapp.controller("InstantSearchController",function($scope, $http, currentPlaylist, searching){
+
+    $scope.searching = searching;
+
+    $scope.updateResult = function() {
+      if (!!searchStr) {
+        $http.get("https://api.spotify.com/v1/search?q="+searchStr+"&limit=15&type=track").then(function(response){
+          $scope.items = response.data.tracks.items;
+        });
+      }
+    }
+
+    $scope.addSong = function(trackID) {
+      $http.get("https://api.spotify.com/v1/tracks/"+trackID).then(function(response){
+        var trackToAdd = response.data;
+        supersonic.logger.info(trackToAdd.id);
+        var new_song = {
+          "title" : String(trackToAdd.name),
+          "artist" : String(trackToAdd.artists[0].name),
+          "album" : String(trackToAdd.album.name),
+          "album_art" : String(trackToAdd.album.images[0].url),
+          "spotify_id" : String(trackToAdd.id)
+        };
+        supersonic.logger.info(currentPlaylist.getProperty() + " is the current PlaylistID.");
+        var playlist_id = currentPlaylist.getProperty();
+        var post_url = "http://45.55.146.198:3000/playlists/"+playlist_id+"/songs";
+        supersonic.logger.info("post url: " + post_url);
+        $http.post(post_url, new_song).then(function(response){
+          // Pop up "{trackName} is added to the Playlist!"
+              // $mdDialog.show(
+              //   $mdDialog.alert()
+              //     .parent(angular.element(document.querySelector('#popupContainer')))
+              //     .clickOutsideToClose(true)
+              //     .title(trackToAdd.name + " is Added to Queue!")
+              //     // .textContent('You can specify some description text in here.')
+              //     // .ariaLabel('Alert Dialog Demo')
+              //     .ok('Got it!')
+              //     // .targetEvent(ev)
+              // );
+          var new_song = response.data;
+          supersonic.logger.info("added song: " + String(new_song.title));
+          window.alert(String(new_song.title) + " is added to the Playlist with ID " + currentPlaylist.getProperty() + ".");
+        }, function(response){
+          var new_song = response.data;
+          supersonic.logger.error("ERROR failed to add song: " + String(new_song.title));
+        });
+      }, function(response){
+        supersonic.logger.error("ERROR failed to get spotify track: " + response.data);
+      });
+    }
+  });
+
+
+
+

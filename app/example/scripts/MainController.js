@@ -39,7 +39,7 @@ myapp.controller("MainCtl",  function($scope, $http){
 
       supersonic.logger.info("Joined playlist: " + playlist_name + " id: " + playlist_id);
       $scope.playlists[playlist_id] = playlist_name;
-    }, function(response){
+    }, function (response){
       supersonic.logger.error("ERROR unable to join playlist: " + response.data);
     });
   }
@@ -151,11 +151,12 @@ myapp.directive('tabset', function() {
   return {
     restrict: 'E',
     transclude: true,
-    scope: {
-      type:'@',
-      vertical:'@',
-      justified:'@',
-    },
+    // scope: {
+    //   type:'@',
+    //   vertical:'@',
+    //   justified:'@',
+    // },
+    scope: false,
     templateUrl: 'tabset.html',
     bindToController: true,
     controllerAs: 'tabset',
@@ -195,7 +196,7 @@ myapp.directive('tabset', function() {
         })
 
       selectedTab.active = true;
-      //$parent.reloadSongs("2");
+      // $parent.reloadSongs("2");
 
       }
 

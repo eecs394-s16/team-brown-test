@@ -158,11 +158,11 @@
           "title" : String(trackToAdd.name),
           "artist" : String(trackToAdd.artists[0].name),
           "album" : String(trackToAdd.album.name),
-          "album_art" : String(trackToAdd.album.images[0]),
+          "album_art" : String(trackToAdd.album.images[0].url),
           "spotify_id" : String(trackToAdd.id)
         };
 
-        var playlist_id = "2";
+        var playlist_id = "3";
         var post_url = "http://45.55.146.198:3000/playlists/"+playlist_id+"/songs";
         supersonic.logger.info("post url: " + post_url);
         $http.post(post_url, new_song).then(function(response){

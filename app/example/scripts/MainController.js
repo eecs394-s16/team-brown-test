@@ -209,7 +209,7 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
   for(var i=0; i<len; i++) upvotedSongList[i] = false;
   $scope.like = function(idx){
     if(!upvotedSongList[idx]){
-       $http.put("http://45.55.146.198:3000/songs/" +$scope.songs[idx].ID+"/upvote").success(function(response){
+       $http.put("http://45.55.146.198:3000/songs/" +$scope.songs[idx].id+"/upvote").success(function(response){
         $scope.songs = response.songs;
         len = response.songs.length;
         upvotedSongList[idx] = true;

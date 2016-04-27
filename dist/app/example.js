@@ -128,6 +128,7 @@ myapp.service('likes', function () {
       likes[playlist_id] = [];
     },
     addLike: function (playlist_id, spotify_id) {
+      window.alert(spotify_id);
       if(likes[playlist_id].indexOf(spotify_id) == -1) {
         likes[playlist_id].push(spotify_id);
         return true;
@@ -312,14 +313,21 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
         break;
       }
     }
-    var added = likes.addLike(currentPlaylist.getProperty(), $scope.songs[id].id);
+    var added = likes.addLike(currentPlaylist.getProperty(), idx);
     if(added){
        $http.put("http://45.55.146.198:3000/songs/" +$scope.songs[id].id+"/upvote").success(function(response){
         $scope.songs = response.songs;
+        queue.setProperty($scope.songs);
         len = response.songs.length;
       })
     }
   }
+
+    $scope.$on("duplicateSong", function (event, idx) {
+      $scope.like(idx);
+    });
+
+  
 
   $scope.add = function() {
     supersonic.logger.info("clicked add song");
@@ -471,7 +479,7 @@ myapp.directive('tabset', function() {
   //           delete $httpProvider.defaults.headers.common['X-Requested-With'];
   //       }]);
 
-  myapp.controller("InstantSearchController",function($scope, $http, currentPlaylist, searching, queue){
+  myapp.controller("InstantSearchController",function($scope, $http, currentPlaylist, searching, queue, likes){
 
     $scope.searching = searching;
 
@@ -535,7 +543,7 @@ myapp.directive('tabset', function() {
             supersonic.logger.error("ERROR failed to add song: " + String(new_song.title));
           });
         } else {
-          window.alert(String(new_song.title) + " is already in playlist")
+          $scope.$emit("duplicateSong", new_song.spotify_id);
         }
 
       }, function(response){

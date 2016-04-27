@@ -3,3 +3,71 @@
   text-align: center;
   font-weight: 600;
 }
+
+#search-body {
+padding: 2px;
+background: light-grey;
+}
+
+#search-bar {
+width:110%;
+border: 2px solid #999999;
+border-radius: 20px;
+font-size: 100%;
+line-height: 100%;
+padding-left: 10px;
+padding-bottom: 0px;
+margin: 20px -5px 0px 0px;
+}
+
+.show-border {
+	border: 2px solid #999999;
+}
+
+#track-name {
+margin-left: 0;
+font-weight: bold;
+line-height: 140%;
+}
+
+#track-info {
+margin-left: 0;
+/*font-weight: lighter;*/
+font-size: 100%;
+line-height: 120%;
+}
+
+#back-search {
+	padding-left: 20px;
+}
+
+#back-button {
+	position:relative;
+    margin-top:19px; 
+    margin-left: 5px;
+    margin-right: 10px;
+    width: 45px;
+	height: 35px;
+}
+
+#cover-img {
+	/*width: 100px;*/
+	width:148px;
+	height: 100px;
+	margin-left: 2px;
+/*	margin-left:20px;
+	margin-right: 5px;*/
+}
+
+#line-between-songs {
+	margin-top: 7px;
+	margin-bottom: 7px;
+	padding: 0px;
+}
+
+.glyphicon {
+	font-family:'Glyphicons' !important;
+    font-size: 30px;
+    font-style: bold;
+}
+

@@ -116,26 +116,26 @@ myapp.service('queue', function () {
       queue = newQueue;
       // window.alert(queue[0].title)
     }
-  }
-})
+  };
+});
 
 myapp.service('likes', function () {
   // map playlist to lists
   // list has each song the user has voted for so far
-  var likes = {};
+  var likes = [];
   return {
     addPlaylist: function (playlist_id) {
       likes[playlist_id] = [];
     },
     addLike: function (playlist_id, spotify_id) {
       if(likes[playlist_id].indexOf(spotify_id) == -1) {
-        likes.playlist_id.push(spotify_id);
+        likes[playlist_id].push(spotify_id);
         return true;
       }
       return false;
     }
-  }
-})
+  };
+});
 
 myapp.config(['$httpProvider', function ($httpProvider) {
   $httpProvider.defaults.useXDomain = true;
@@ -304,13 +304,17 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
     });
   }
 
-  // var upvotedSongList = []
-  // for(var i=0; i<len; i++) upvotedSongList[i] = false;
-
-  $scope.like = function(song_id){
-    var added = likes.addLike(currentPlaylist.getProperty, song_id);
+  $scope.like = function(idx){
+    var id;
+    for( i = 0; i < $scope.songs.length; i++) {
+      if($scope.songs[i].spotify_id == idx) {
+        id = i;
+        break;
+      }
+    }
+    var added = likes.addLike(currentPlaylist.getProperty(), $scope.songs[id].id);
     if(added){
-       $http.put("http://45.55.146.198:3000/songs/" +song_id+"/upvote").success(function(response){
+       $http.put("http://45.55.146.198:3000/songs/" +$scope.songs[id].id+"/upvote").success(function(response){
         $scope.songs = response.songs;
         len = response.songs.length;
       })

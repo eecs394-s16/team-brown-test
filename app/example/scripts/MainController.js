@@ -226,14 +226,6 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
                 // audio.play();
               });
           });
-
-            // supersonic.logger.info(audio.src);
-            // $http.get("https://api.spotify.com/v1/tracks/" + data.active_song.spotify_id).then(function(resp){
-            //   audio.src = resp.data.preview_url;
-            //   supersonic.logger.info(audio.src + "First audio src is set.");
-            //   audio.play();
-            // });
-
             return;
           }
 

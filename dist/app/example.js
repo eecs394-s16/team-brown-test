@@ -73,6 +73,7 @@ angular
 
   });
 
+
 var myapp = new angular.module("myapp", []);
 
 myapp.service('currentPlaylist', function () {
@@ -127,9 +128,13 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
 
   var len  = 0;
   $scope.playlists = {};
+  $scope.songs = [];
+  $scope.selected = null;
 
   $scope.searching = searching;
   $scope.admin = false;
+
+  var audio = new Audio();
 
   $scope.$on('reloadSongs', function (event, playlist_id){
     supersonic.logger.info("reloading songs now. playlist_id: " + playlist_id);
@@ -171,6 +176,12 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
       $scope.songs = response.data.songs;
       $scope.selected = response.data.active_song;
 
+      $http.get("https://api.spotify.com/v1/tracks/" + response.data.active_song.spotify_id).then(function(resp){
+        audio.src = resp.data.preview_url;
+        supersonic.logger.info(audio.src);
+
+      });
+
       supersonic.logger.info("Joined playlist: " + playlist_name + " id: " + playlist_id);
       $scope.playlists[playlist_id] = playlist_name;
       currentPlaylist.setProperty(playlist_id);
@@ -181,6 +192,24 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
       window.alert("Playlist ID doesn't exist.");
       supersonic.logger.error("ERROR unable to join playlist: " + response.data);
     });
+
+    var exampleSocket = new WebSocket("ws://45.55.146.198:3000/ws/playlists/"+playlist_id);
+
+    exampleSocket.onmessage = function(response){
+      console.log("we are in ws onmessage");
+      var data = JSON.parse(response.data);
+      // console.log(data.songs);
+      $scope.$apply(function(){
+        $scope.songs = data.songs;
+        if(data.active_song.id != $scope.selected.id){
+          $scope.selected = data.active_song;
+          $http.get("https://api.spotify.com/v1/tracks/" + data.active_song.spotify_id).then(function(resp){
+            audio.src = resp.data.preview_url;
+            supersonic.logger.info(audio.src);
+          });
+        }
+      })
+    }
   }
 
   $scope.createPlaylist = function(playlist_name){
@@ -231,8 +260,6 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
   $scope.add = function() {
     supersonic.logger.info("clicked add song");
   }
-
-  var audio = new Audio();
 
   audio.src = "https://p.scdn.co/mp3-preview/c58f1bc9160754337b858a4eb824a6ac2321041d";
   $scope.player = function(){
@@ -429,7 +456,7 @@ myapp.directive('tabset', function() {
                 //     .ok('Got it!')
                 //     // .targetEvent(ev)
                 // );
-            var new_song = response.data;
+            // var new_song = response.data;
             supersonic.logger.info("added song: " + String(new_song.title));
             window.alert(String(new_song.title) + " is added to the Playlist with ID " + currentPlaylist.getProperty() + ".");
             $http.get("http://45.55.146.198:3000/playlists/" + playlist_id).then(function(response){
@@ -452,10 +479,6 @@ myapp.directive('tabset', function() {
       });
     }
   });
-
-
-
-
 
 angular
   .module('example')

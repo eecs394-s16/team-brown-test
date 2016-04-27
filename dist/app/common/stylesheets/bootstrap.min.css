@@ -30,11 +30,13 @@
     width : 8em;
     line-height : 4em;
 }*/
-input[type="text"], textarea {
+/*input[type="text"], textarea {
+
 
   background-color : #08B7F6; 
 
-}
+}*/
+
 .show {
     left : 0;
 }

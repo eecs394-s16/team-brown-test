@@ -114,6 +114,8 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching)
 
   var len  = 0;
   $scope.playlists = {};
+  $scope.songs = [];
+  $scope.selected = null;
 
   $scope.searching = searching;
   $scope.admin = false;
@@ -145,6 +147,20 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching)
     }, function(response){
       supersonic.logger.error("ERROR Could not reload songs. name: " + playlist_name + " id: " + playlist_id);
     });
+  }
+
+  var exampleSocket = new WebSocket("ws://45.55.146.198:3000/ws/playlists/2");
+
+  exampleSocket.onmessage = function(response){
+    console.log("we are in ws onmessage");
+    var data = JSON.parse(response.data);
+    // console.log(data.songs);
+    $scope.$apply(function(){
+      $scope.songs = data.songs;
+    })
+    if(data.active_song.id != $scope.selected.id){
+      $scope.selected = data.active_song;
+    }
   }
 
   // $scope.reloadSongs();
@@ -413,10 +429,6 @@ myapp.directive('tabset', function() {
       });
     }
   });
-
-
-
-
 
 angular
   .module('example')

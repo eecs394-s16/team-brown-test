@@ -47,6 +47,10 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching)
   $scope.admin = false;
 
   var audio = new Audio();
+  audio.onended = function () {
+    supersonic.logger.log($scope.selected.title + " has ended. A new song should be played next.");
+    $http.put("http://45.55.146.198:3000/playlists/" + currentPlaylist.getProperty() + "/pop");
+  }
 
   $scope.$on('reloadSongs', function (event, playlist_id){
     supersonic.logger.info("reloading songs now. playlist_id: " + playlist_id);
@@ -116,6 +120,7 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching)
           $http.get("https://api.spotify.com/v1/tracks/" + data.active_song.spotify_id).then(function(resp){
             audio.src = resp.data.preview_url;
             supersonic.logger.info(audio.src);
+            audio.play();
           });
         }
       })
@@ -129,6 +134,8 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching)
     $http.post("http://45.55.146.198:3000/playlists", newPlaylist).then(function (response){
       var playlist_id = response.data.id;
       var playlist_name = response.data.name;
+
+
       $scope.songs = response.data.songs;
       $scope.selected = response.data.active_song;
 
@@ -137,6 +144,33 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching)
       currentPlaylist.setProperty(playlist_id);
       supersonic.logger.info("Current Playlist ID set to " + currentPlaylist.getProperty() + ".");
       window.alert(playlist_name + " created. Join ID: " + playlist_id);
+
+      var exampleSocket = new WebSocket("ws://45.55.146.198:3000/ws/playlists/"+playlist_id);
+
+      exampleSocket.onmessage = function(response){
+        console.log("we are in ws onmessage");
+        var data = JSON.parse(response.data);
+        // console.log(data.songs);
+        $scope.$apply(function(){
+          if ($scope.songs.length == 0 && data.songs.length == 1) {
+            supersonic.logger.log("First song of this playlist is added.");
+            $http.put("http://45.55.146.198:3000/playlists/" + currentPlaylist.getProperty() + "/pop");
+            $scope.selected = response.data.active_song;
+            $scope.reloadSongs(playlist_id);
+          }
+          $scope.songs = data.songs;
+
+          if(data.active_song == null || data.active_song.id != $scope.selected.id){
+            $scope.selected = data.active_song;
+            $http.get("https://api.spotify.com/v1/tracks/" + data.active_song.spotify_id).then(function(resp){
+              audio.src = resp.data.preview_url;
+              supersonic.logger.info(audio.src);
+              audio.play();
+            });
+          }
+        })
+      }
+
     }, function (response){
       window.alert("Error creating playlist.");
       supersonic.logger.error("ERROR Cannot Create Playlist: " + response.data);

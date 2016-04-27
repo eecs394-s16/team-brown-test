@@ -353,7 +353,7 @@ myapp.directive('tabset', function() {
               //     .ok('Got it!')
               //     // .targetEvent(ev)
               // );
-          var new_song = response.data;
+          // var new_song = response.data;
           supersonic.logger.info("added song: " + String(new_song.title));
           window.alert(String(new_song.title) + " is added to the Playlist with ID " + currentPlaylist.getProperty() + ".");
         }, function(response){

@@ -116,15 +116,36 @@ myapp.service('queue', function () {
       queue = newQueue;
       // window.alert(queue[0].title)
     }
-  }
-})
+  };
+});
+
+myapp.service('likes', function () {
+  // map playlist to lists
+  // list has each song the user has voted for so far
+  var likes = [];
+  return {
+    addPlaylist: function (playlist_id) {
+      likes[playlist_id] = [];
+    },
+    addLike: function (playlist_id, spotify_id) {
+      // window.alert(likes[playlist_id] == null);
+      if(likes[playlist_id].indexOf(spotify_id) == -1) {
+        // window.alert("liking");
+        likes[playlist_id].push(spotify_id);
+        return true;
+      }
+      // window.alert("no");
+      return false;
+    }
+  };
+});
 
 myapp.config(['$httpProvider', function ($httpProvider) {
   $httpProvider.defaults.useXDomain = true;
   delete $httpProvider.defaults.headers.common['X-Requested-With'];
 }]);
 
-myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching, queue){
+myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching, queue, likes){
 
   var len  = 0;
   $scope.playlists = {};
@@ -190,6 +211,7 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
       $scope.playlists[playlist_id] = playlist_name;
       currentPlaylist.setProperty(playlist_id);
       queue.setProperty($scope.songs);
+      likes.addPlaylist(playlist_id);
       supersonic.logger.info("Current Playlist ID set to " + currentPlaylist.getProperty() + ".");
       window.alert(playlist_name + " joined.")
     }, function(response){
@@ -212,8 +234,7 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
             audio.src = resp.data.preview_url;
 
             supersonic.logger.info(audio.src);
-            audio.play();
-
+            // audio.play();
           });
         }
       })
@@ -236,6 +257,7 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
       $scope.playlists[playlist_id] = playlist_name;
       currentPlaylist.setProperty(playlist_id);
       queue.setProperty($scope.songs);
+      likes.addPlaylist(playlist_id);
       supersonic.logger.info("Current Playlist ID set to " + currentPlaylist.getProperty() + ".");
       window.alert(playlist_name + " created. Join ID: " + playlist_id);
 
@@ -245,23 +267,60 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
         console.log("we are in ws onmessage");
         var data = JSON.parse(response.data);
         // console.log(data.songs);
-        if ($scope.selected == null && $scope.songs.length == 0 && data.songs.length == 1){
-            supersonic.logger.log("First song of this playlist is added.");
-            $http.put("http://45.55.146.198:3000/playlists/" + currentPlaylist.getProperty() + "/pop");
-            $scope.selected = response.data.active_song;
-        }
-        $scope.$apply(function(){
-          $scope.songs = data.songs;
-        });
 
-        if(data.active_song != null || data.active_song.id != $scope.selected.id){
+        // if ($scope.selected == null && $scope.songs.length == 0 && data.songs.length == 1){
+        //     supersonic.logger.log("First song of this playlist is added.");
+        //     $http.put("http://45.55.146.198:3000/playlists/" + currentPlaylist.getProperty() + "/pop");
+        //     $scope.selected = response.data.active_song;
+        // }
+        // $scope.$apply(function(){
+        //   $scope.songs = data.songs;
+        // });
+        //
+        // if(data.active_song != null || data.active_song.id != $scope.selected.id){
+        //     $scope.selected = data.active_song;
+        //     $http.get("https://api.spotify.com/v1/tracks/" + data.active_song.spotify_id).then(function(resp){
+        //     audio.src = resp.data.preview_url;
+        //     upersonic.logger.info(audio.src);
+        //     audio.play();
+        //   });
+        // }
+
+        $scope.$apply(function(){
+          supersonic.logger.log($scope.active_song + " what is this?");
+          if ($scope.selected == undefined && $scope.songs.length == 0 && data.songs.length == 1) {
+            supersonic.logger.log("First song of this playlist is added.");
+            $http.put("http://45.55.146.198:3000/playlists/" + currentPlaylist.getProperty() + "/pop").then(function(response){
+              $http.get("https://api.spotify.com/v1/tracks/" + response.data.active_song.spotify_id).then(function(resp){
+                audio.src = resp.data.preview_url;
+                supersonic.logger.info(audio.src + "First audio src is set.");
+                // audio.play();
+              });
+          });
+
+            // supersonic.logger.info(audio.src);
+            // $http.get("https://api.spotify.com/v1/tracks/" + data.active_song.spotify_id).then(function(resp){
+            //   audio.src = resp.data.preview_url;
+            //   supersonic.logger.info(audio.src + "First audio src is set.");
+            //   audio.play();
+            // });
+
+            return;
+          }
+
+          $scope.songs = data.songs;
+          $scope.reloadSongs(playlist_id);
+
+          if($scope.selected != undefined && data.active_song.id != $scope.selected.id){
             $scope.selected = data.active_song;
             $http.get("https://api.spotify.com/v1/tracks/" + data.active_song.spotify_id).then(function(resp){
-            audio.src = resp.data.preview_url;
-            upersonic.logger.info(audio.src);
-            audio.play();
-          });
-        }
+              audio.src = resp.data.preview_url;
+              supersonic.logger.info(audio.src + "audio src is set with active.");
+              audio.play();
+              // $scope.player();
+            });
+          }
+        })
       }
 
     }, function (response){
@@ -281,18 +340,29 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
     });
   }
 
-
-  var upvotedSongList = []
-  for(var i=0; i<len; i++) {upvotedSongList[i] = false;}
   $scope.like = function(idx){
-    if(!upvotedSongList[idx]){
-       $http.put("http://45.55.146.198:3000/songs/" +$scope.songs[idx].id+"/upvote").success(function(response){
+    var id;
+    for( i = 0; i < $scope.songs.length; i++) {
+      if($scope.songs[i].spotify_id == idx) {
+        id = i;
+        break;
+      }
+    }
+    var added = likes.addLike(currentPlaylist.getProperty(), idx);
+    if(added){
+       $http.put("http://45.55.146.198:3000/songs/" +$scope.songs[id].id+"/upvote").success(function(response){
         $scope.songs = response.songs;
+        queue.setProperty($scope.songs);
         len = response.songs.length;
-        upvotedSongList[idx] = true;
       })
     }
   }
+
+    $scope.$on("duplicateSong", function (event, idx) {
+      $scope.like(idx);
+    });
+
+
 
   $scope.add = function() {
     supersonic.logger.info("clicked add song");
@@ -444,7 +514,7 @@ myapp.directive('tabset', function() {
   //           delete $httpProvider.defaults.headers.common['X-Requested-With'];
   //       }]);
 
-  myapp.controller("InstantSearchController",function($scope, $http, currentPlaylist, searching, queue){
+  myapp.controller("InstantSearchController",function($scope, $http, currentPlaylist, searching, queue, likes){
 
     $scope.searching = searching;
 
@@ -498,7 +568,7 @@ myapp.directive('tabset', function() {
             window.alert(String(new_song.title) + " is added to the Playlist with ID " + currentPlaylist.getProperty() + ".");
             $http.get("http://45.55.146.198:3000/playlists/" + playlist_id).then(function(response){
               queue.setProperty(response.data.songs);
-              supersonic.logger.info("Reloaded songs for playlist :" + playlist_name);
+              // supersonic.logger.info("Reloaded songs for playlist :" + playlist_name);
 
             }, function(response){
               supersonic.logger.error("ERROR Could not reload songs after add");
@@ -508,7 +578,8 @@ myapp.directive('tabset', function() {
             supersonic.logger.error("ERROR failed to add song: " + String(new_song.title));
           });
         } else {
-          window.alert(String(new_song.title) + " is already in playlist")
+          window.alert("Song is already in playlist");
+          $scope.$emit("duplicateSong", new_song.spotify_id);
         }
 
       }, function(response){

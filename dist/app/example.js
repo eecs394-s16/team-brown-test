@@ -119,12 +119,28 @@ myapp.service('queue', function () {
   }
 })
 
+myapp.service('likes', function () {
+  // map playlist to lists
+  // list has each song the user has voted for so far
+  var likes = {};
+  return {
+    addPlaylist: function (playlist_id) {
+      likes[playlist_id] = [];
+    },
+    addLike: function (playlist_id, spotify_id) {
+      if(likes[playlist_id].indexOf(spotify_id) == -1) {
+        likes.playlist_id.push(spotify_id);
+      }
+    }
+  }
+})
+
 myapp.config(['$httpProvider', function ($httpProvider) {
   $httpProvider.defaults.useXDomain = true;
   delete $httpProvider.defaults.headers.common['X-Requested-With'];
 }]);
 
-myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching, queue){
+myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching, queue, likes){
 
   var len  = 0;
   $scope.playlists = {};
@@ -176,6 +192,9 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
       $scope.songs = response.data.songs;
       $scope.selected = response.data.active_song;
 
+      likes.addPlaylist(playlist_id);
+
+
       $http.get("https://api.spotify.com/v1/tracks/" + response.data.active_song.spotify_id).then(function(resp){
         audio.src = resp.data.preview_url;
         supersonic.logger.info(audio.src);
@@ -222,6 +241,7 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
       var playlist_name = response.data.name;
       $scope.songs = response.data.songs;
       $scope.selected = response.data.active_song;
+      likes.addPlaylist(playlist_id);
 
       supersonic.logger.info("Created playlist " + playlist_name + " id " + playlist_id);
       $scope.playlists[playlist_id] = playlist_name;
@@ -246,8 +266,8 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
     });
   }
 
-  var upvotedSongList = []
-  for(var i=0; i<len; i++) upvotedSongList[i] = false;
+  // var upvotedSongList = []
+  // for(var i=0; i<len; i++) upvotedSongList[i] = false;
   $scope.like = function(idx){
     if(!upvotedSongList[idx]){
        $http.put("http://45.55.146.198:3000/songs/" +$scope.songs[idx].ID+"/upvote").success(function(response){

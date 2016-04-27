@@ -103,13 +103,13 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
       playlist_id = response.data.id;
       playlist_name = response.data.name;
       $scope.songs = response.data.songs;
-      $scope.selected = response.data.active_song;
 
-      $http.get("https://api.spotify.com/v1/tracks/" + response.data.active_song.spotify_id).then(function(resp){
-        audio.src = resp.data.preview_url;
-        // supersonic.logger.info(audio.src);
-
-      });
+      if (response.data.active_song != null){
+        $scope.selected = response.data.active_song;
+        $http.get("https://api.spotify.com/v1/tracks/" + response.data.active_song.spotify_id).then(function(resp){
+          audio.src = resp.data.preview_url;
+        });
+      }
 
       supersonic.logger.info("Joined playlist: " + playlist_name + " id: " + playlist_id);
       $scope.playlists[playlist_id] = playlist_name;
@@ -170,24 +170,23 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
         console.log("we are in ws onmessage");
         var data = JSON.parse(response.data);
         // console.log(data.songs);
-        $scope.$apply(function(){
-          if ($scope.songs.length == 0 && data.songs.length == 1) {
+        if ($scope.selected == null && $scope.songs.length == 0 && data.songs.length == 1){
             supersonic.logger.log("First song of this playlist is added.");
             $http.put("http://45.55.146.198:3000/playlists/" + currentPlaylist.getProperty() + "/pop");
             $scope.selected = response.data.active_song;
-            $scope.reloadSongs(playlist_id);
-          }
+        }
+        $scope.$apply(function(){
           $scope.songs = data.songs;
+        });
 
-          if(data.active_song == null || data.active_song.id != $scope.selected.id){
+        if(data.active_song != null || data.active_song.id != $scope.selected.id){
             $scope.selected = data.active_song;
             $http.get("https://api.spotify.com/v1/tracks/" + data.active_song.spotify_id).then(function(resp){
-              audio.src = resp.data.preview_url;
-              supersonic.logger.info(audio.src);
-              audio.play();
-            });
-          }
-        })
+            audio.src = resp.data.preview_url;
+            upersonic.logger.info(audio.src);
+            audio.play();
+          });
+        }
       }
 
     }, function (response){

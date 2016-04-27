@@ -76,14 +76,14 @@
 				<div class="container text-center login_div carousel">
 					<br><br><br><br>
 					<form>
-						<input type="text" class="text-center" ng-model="joinPlaylistId"></input><br><br>
+						<input type="text" style = "border: 2px solid #999999;" class="text-center" ng-model="joinPlaylistId"></input><br><br>
 						<button class="btn btn-primary" ng-click="joinPlaylist(joinPlaylistId)">
 							Join Playlist
 						</button>
 					</form>
 					<hr/>
 					<form>
-						<input type="text" class="text-center" ng-model="newPlaylistName"></input><br><br>
+						<input type="text" style = "border: 2px solid #999999;" class="text-center" ng-model="newPlaylistName"></input><br><br>
 						<button class="btn btn-primary" ng-click="createPlaylist(newPlaylistName)">
 							Create Playlist
 						</button>
@@ -106,7 +106,7 @@
 												<h2>{{selected.title}}</h2>
 											</td>
 											<td rowspan="2">
-												<img height="100px" width="100px" src="{{ selected.album_art }}" align="middle">
+												<img height="100px" width="100px" ng-src="{{ selected.album_art }}" align="middle">
 											</td>
 										</tr>
 										<tr colspan="2">
@@ -181,17 +181,18 @@
 		<style scoped>
 /*        	<link rel="stylesheet" type="text/css" href="https://developer.spotify.com/web-api/static/css/cached.css">*/
     	</style>
-	  <form class="col-xs- search-bar">
-	    <!-- <h1>Search for a track</h1> -->
-	    <input type="text" id = "search-bar" class="col-xs-12 form-control" ng-model="searchString" ng-change="updateResult()" placeholder="Search for songs to add to queue" />
+	  <form id="back-search" class="row">
+
+	    <input id = "back-button" class="col-xs-" type="image" src="/img/back-button.png" ng-click="searching.reverse()">
+	    <input type="text" id = "search-bar" class="col-xs-10 form-control" ng-model="searchString" ng-change="updateResult()" placeholder="Search for songs to add to queue" />
 	  </form>
-	  <button class = "btn btn-default" ng-click="searching.reverse()">Go Back to Playlist</button>
+	  <!-- <button class = "btn btn-default" ng-click="searching.reverse()">Go Back to Playlist</button> -->
 	  <div ng-repeat="i in items | searchFor:searchString">
 	    <div class="track row">
-	        <div class="cover-album col-xs-">
-	            <img ng-src="{{i.album.images[1].url}}"/>
-	        </div>
-	        <div class="col-xs-11">
+	        
+	        <img id = "cover-img" class="col-xs-3" ng-src="{{i.album.images[1].url}}"/>
+	        
+	        <div class="col-xs-8">
 	            <p id="track-name">{{i.name}}</p>
 	            <p id="track-info">
 	                {{i.artists[0].name}} &middot {{i.album.name}}
@@ -201,6 +202,7 @@
 	          <a ng-click="addSong(i.id)"><span class="glyphicon glyphicon-plus"></span></a>
 	        </div>
 	    </div>
+	    <hr id="line-between-songs">
 	  </div>
 	</div>
 	</body>

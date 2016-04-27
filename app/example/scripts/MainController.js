@@ -123,19 +123,13 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
       playlist_name = response.data.name;
       $scope.songs = response.data.songs;
       if (response.data.active_song != null){
-         $scope.selected = response.data.active_song;
+        $scope.selected = response.data.active_song;
 
-      likes.addPlaylist(playlist_id);
-
-
-      $http.get("https://api.spotify.com/v1/tracks/" + response.data.active_song.spotify_id).then(function(resp){
-        audio.src = resp.data.preview_url;
-        // supersonic.logger.info(audio.src);
+        likes.addPlaylist(playlist_id);
 
         $http.get("https://api.spotify.com/v1/tracks/" + response.data.active_song.spotify_id).then(function(resp){
           audio.src = resp.data.preview_url;
           successfullypersonic.logger.info(audio.src);
-
         });
       }
 

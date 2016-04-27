@@ -97,7 +97,16 @@
 							</div>
 							<hr/>
 							<!-- <div class="col-sm-3 well"> -->
+							<br/>
+							<br/>
+							
 							<div class="col-xs-12 well">
+								<button class="btn btn-primary pull-right" ng-click="searching.reverse()">
+									<i class="fa fa-plus"></i> Add song
+								</button>
+								<button class="btn btn-primary pull-left" ng-click="reloadSongs(playlist_id)">
+									Reload
+							</button>
 								<table class = "table table-striped">
 									<thead>
 										<tr>
@@ -121,14 +130,6 @@
 										</tr>
 									</tbody>
 								</table>
-								<button class="btn btn-primary pull-right" ng-click="searching.reverse()">
-									<i class="fa fa-plus"></i> Add song
-								</button>
-								<button class="btn btn-primary pull-left" ng-click="reloadSongs(playlist_id)">
-									Reload
-								</button>
-								<br/>
-								<br/>
 							</div>
 						</div>
 					</div>

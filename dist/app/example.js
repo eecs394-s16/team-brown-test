@@ -128,13 +128,14 @@ myapp.service('likes', function () {
       likes[playlist_id] = [];
     },
     addLike: function (playlist_id, spotify_id) {
-      // window.alert(likes[playlist_id] == null);
+
       if(likes[playlist_id].indexOf(spotify_id) == -1) {
         // window.alert("liking");
         likes[playlist_id].push(spotify_id);
         return true;
       }
       // window.alert("no");
+
       return false;
     }
   };
@@ -151,6 +152,8 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
   $scope.playlists = {};
   $scope.songs = [];
   $scope.selected = null;
+  $scope.admin = false;
+
 
   $scope.searching = searching;
   $scope.admin = false;
@@ -245,6 +248,7 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
     var newPlaylist = {
       "name" : playlist_name
     };
+    $scope.admin = true;
     $http.post("http://45.55.146.198:3000/playlists", newPlaylist).then(function (response){
       var playlist_id = response.data.id;
       var playlist_name = response.data.name;
@@ -355,12 +359,15 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
         queue.setProperty($scope.songs);
         len = response.songs.length;
       })
+    } else {
+      window.alert("You have already voted for this song.");
     }
   }
 
-    $scope.$on("duplicateSong", function (event, idx) {
-      $scope.like(idx);
-    });
+  $scope.$on('duplicateSong', function (event, args) {
+    window.alert(args);
+    $scope.like(args);
+  });
 
 
 
@@ -579,7 +586,7 @@ myapp.directive('tabset', function() {
           });
         } else {
           window.alert("Song is already in playlist");
-          $scope.$emit("duplicateSong", new_song.spotify_id);
+          $scope.$emit('duplicateSong', {id:new_song.spotify_id});
         }
 
       }, function(response){

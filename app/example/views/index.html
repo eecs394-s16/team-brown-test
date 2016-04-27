@@ -16,7 +16,7 @@
 		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 	  	<!-- <link rel="stylesheet" type="text/css" href="https://developer.spotify.com/web-api/static/css/cached.css"> -->
 
-		
+
 	  <link rel="stylesheet" href="/components/supersonic/css/supersonic.css" />
 	  <link rel="stylesheet" href="/app/common/stylesheets/application.css" />
 	  <link rel="import" href="/components/supersonic/components/import.html">
@@ -26,7 +26,7 @@
 	  <script src="/components/angular/angular.js"></script>
 	  <script src="/components/supersonic/supersonic.js"></script>
 	  <script src="/components/webcomponentsjs/webcomponents.js"></script>
-	  
+
 	</head>
 
 	<body>
@@ -79,7 +79,7 @@
 										</tr>
 									</tbody>
 								</table>
-								<button class="btn btn-default" ng-show="!admin" ng-click="admin=!admin">admin</button> 
+								<!-- <button class="btn btn-default" ng-show="!admin" ng-click="admin=!admin">admin</button>  -->
 								<div ng-show="admin" class="player text-center">
 									<button type="button" id="button_bw" class="btn">
 										<i class="fa fa-fast-backward"></i>
@@ -97,7 +97,16 @@
 							</div>
 							<hr/>
 							<!-- <div class="col-sm-3 well"> -->
+							<br/>
+							<br/>
+
 							<div class="col-xs-12 well">
+								<button class="btn btn-primary pull-right" ng-click="searching.reverse()">
+									<i class="fa fa-plus"></i> Add song
+								</button>
+								<button class="btn btn-primary pull-left" ng-click="reloadSongs(playlist_id)">
+									Reload
+							</button>
 								<table class = "table table-striped">
 									<thead>
 										<tr>
@@ -121,14 +130,6 @@
 										</tr>
 									</tbody>
 								</table>
-								<button class="btn btn-primary pull-right" ng-click="searching.reverse()">
-									<i class="fa fa-plus"></i> Add song
-								</button>
-								<button class="btn btn-primary pull-left" ng-click="reloadSongs(playlist_id)">
-									Reload
-								</button>
-								<br/>
-								<br/>
 							</div>
 						</div>
 					</div>
@@ -149,9 +150,9 @@
 	  <!-- <button class = "btn btn-default" ng-click="searching.reverse()">Go Back to Playlist</button> -->
 	  <div ng-repeat="i in items | searchFor:searchString">
 	    <div class="track row">
-	        
+
 	        <img id = "cover-img" class="col-xs-3" ng-src="{{i.album.images[1].url}}"/>
-	        
+
 	        <div class="col-xs-8">
 	            <p id="track-name">{{i.name}}</p>
 	            <p id="track-info">

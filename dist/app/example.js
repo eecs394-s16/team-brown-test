@@ -120,6 +120,8 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching)
   $scope.searching = searching;
   $scope.admin = false;
 
+  var audio = new Audio();
+
   $scope.$on('reloadSongs', function (event, playlist_id){
     supersonic.logger.info("reloading songs now. playlist_id: " + playlist_id);
 
@@ -177,10 +179,10 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching)
       // console.log(data.songs);
       $scope.$apply(function(){
         $scope.songs = data.songs;
+        if(data.active_song.id != $scope.selected.id){
+          $scope.selected = data.active_song;
+        }
       })
-      if(data.active_song.id != $scope.selected.id){
-        $scope.selected = data.active_song;
-      }
     }
   }
 
@@ -229,8 +231,6 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching)
   $scope.add = function() {
     supersonic.logger.info("clicked add song");
   }
-
-  var audio = new Audio();
 
   audio.src = "https://p.scdn.co/mp3-preview/c58f1bc9160754337b858a4eb824a6ac2321041d";
   $scope.player = function(){

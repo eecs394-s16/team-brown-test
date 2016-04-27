@@ -106,11 +106,12 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
       if (response.data.active_song != null){
          $scope.selected = response.data.active_song;
 
+
         $http.get("https://api.spotify.com/v1/tracks/" + response.data.active_song.spotify_id).then(function(resp){
           audio.src = resp.data.preview_url;
           successfullypersonic.logger.info(audio.src);
 
-      });
+        });
       }
 
       supersonic.logger.info("Joined playlist: " + playlist_name + " id: " + playlist_id);
@@ -137,8 +138,9 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
           $scope.selected = data.active_song;
           $http.get("https://api.spotify.com/v1/tracks/" + data.active_song.spotify_id).then(function(resp){
             audio.src = resp.data.preview_url;
+
             supersonic.logger.info(audio.src);
-            // audio.play();
+
           });
         }
       })
@@ -224,8 +226,9 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
     });
   }
 
+
   var upvotedSongList = []
-  for(var i=0; i<len; i++) upvotedSongList[i] = false;
+  for(var i=0; i<len; i++) {upvotedSongList[i] = false;}
   $scope.like = function(idx){
     if(!upvotedSongList[idx]){
        $http.put("http://45.55.146.198:3000/songs/" +$scope.songs[idx].id+"/upvote").success(function(response){
@@ -452,7 +455,7 @@ myapp.directive('tabset', function() {
         } else {
           window.alert(String(new_song.title) + " is already in playlist")
         }
-        
+
       }, function(response){
         supersonic.logger.error("ERROR failed to get spotify track: " + response.data);
       });

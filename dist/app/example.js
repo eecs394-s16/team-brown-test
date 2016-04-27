@@ -181,9 +181,15 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
       if (response.data.active_song != null){
          $scope.selected = response.data.active_song;
 
+<<<<<<< HEAD
         $http.get("https://api.spotify.com/v1/tracks/" + response.data.active_song.spotify_id).then(function(resp){
           audio.src = resp.data.preview_url;
           successfullypersonic.logger.info(audio.src);
+=======
+      $http.get("https://api.spotify.com/v1/tracks/" + response.data.active_song.spotify_id).then(function(resp){
+        audio.src = resp.data.preview_url;
+        // supersonic.logger.info(audio.src);
+>>>>>>> 33c9d47e1fe3db3f1b1d463970aa71eab5133c7d
 
       });
       }
@@ -212,8 +218,16 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
           $scope.selected = data.active_song;
           $http.get("https://api.spotify.com/v1/tracks/" + data.active_song.spotify_id).then(function(resp){
             audio.src = resp.data.preview_url;
+<<<<<<< HEAD
+            // supersonic.logger.info(audio.src);
+=======
             supersonic.logger.info(audio.src);
+<<<<<<< HEAD
             // audio.play();
+=======
+            audio.play();
+>>>>>>> 199e0e1eaff89768cdbc82c51961699ce0d19863
+>>>>>>> 33c9d47e1fe3db3f1b1d463970aa71eab5133c7d
           });
         }
       })
@@ -299,8 +313,9 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
     });
   }
 
+
   var upvotedSongList = []
-  for(var i=0; i<len; i++) upvotedSongList[i] = false;
+  for(var i=0; i<len; i++) {upvotedSongList[i] = false;}
   $scope.like = function(idx){
     if(!upvotedSongList[idx]){
        $http.put("http://45.55.146.198:3000/songs/" +$scope.songs[idx].id+"/upvote").success(function(response){

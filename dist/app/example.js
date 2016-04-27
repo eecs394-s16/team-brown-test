@@ -163,7 +163,7 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching)
 
       $http.get("https://api.spotify.com/v1/tracks/" + response.data.active_song.spotify_id).then(function(resp){
         audio.src = resp.data.preview_url;
-        supersonic.logger.info(audio.src);
+        // supersonic.logger.info(audio.src);
 
       });
 
@@ -189,7 +189,7 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching)
           $scope.selected = data.active_song;
           $http.get("https://api.spotify.com/v1/tracks/" + data.active_song.spotify_id).then(function(resp){
             audio.src = resp.data.preview_url;
-            supersonic.logger.info(audio.src);
+            // supersonic.logger.info(audio.src);
           });
         }
       })
@@ -226,11 +226,12 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching)
     });
   }
 
+
   var upvotedSongList = []
-  for(var i=0; i<len; i++) upvotedSongList[i] = false;
+  for(var i=0; i<len; i++) {upvotedSongList[i] = false;}
   $scope.like = function(idx){
     if(!upvotedSongList[idx]){
-       $http.put("http://45.55.146.198:3000/songs/" +$scope.songs[idx].ID+"/upvote").success(function(response){
+       $http.put("http://45.55.146.198:3000/songs/" +$scope.songs[idx].id+"/upvote").success(function(response){
         $scope.songs = response.songs;
         len = response.songs.length;
         upvotedSongList[idx] = true;
@@ -242,7 +243,7 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching)
     supersonic.logger.info("clicked add song");
   }
 
-  audio.src = "https://p.scdn.co/mp3-preview/c58f1bc9160754337b858a4eb824a6ac2321041d";
+  // audio.src = "https://p.scdn.co/mp3-preview/c58f1bc9160754337b858a4eb824a6ac2321041d";
   $scope.player = function(){
     if($scope.play){
       $scope.play = false;

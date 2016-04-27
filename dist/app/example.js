@@ -178,13 +178,15 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
       playlist_id = response.data.id;
       playlist_name = response.data.name;
       $scope.songs = response.data.songs;
-      $scope.selected = response.data.active_song;
+      if (response.data.active_song != null){
+         $scope.selected = response.data.active_song;
 
-      $http.get("https://api.spotify.com/v1/tracks/" + response.data.active_song.spotify_id).then(function(resp){
-        audio.src = resp.data.preview_url;
-        supersonic.logger.info(audio.src);
+        $http.get("https://api.spotify.com/v1/tracks/" + response.data.active_song.spotify_id).then(function(resp){
+          audio.src = resp.data.preview_url;
+          successfullypersonic.logger.info(audio.src);
 
       });
+      }
 
       supersonic.logger.info("Joined playlist: " + playlist_name + " id: " + playlist_id);
       $scope.playlists[playlist_id] = playlist_name;
@@ -211,7 +213,7 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
           $http.get("https://api.spotify.com/v1/tracks/" + data.active_song.spotify_id).then(function(resp){
             audio.src = resp.data.preview_url;
             supersonic.logger.info(audio.src);
-            audio.play();
+            // audio.play();
           });
         }
       })
@@ -244,20 +246,37 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
         var data = JSON.parse(response.data);
         // console.log(data.songs);
         $scope.$apply(function(){
-          if ($scope.songs.length == 0 && data.songs.length == 1) {
+          supersonic.logger.log($scope.active_song + " what is this?");
+          if ($scope.selected == undefined && $scope.songs.length == 0 && data.songs.length == 1) {
             supersonic.logger.log("First song of this playlist is added.");
-            $http.put("http://45.55.146.198:3000/playlists/" + currentPlaylist.getProperty() + "/pop");
-            $scope.selected = response.data.active_song;
-            $scope.reloadSongs(playlist_id);
-          }
-          $scope.songs = data.songs;
+            $http.put("http://45.55.146.198:3000/playlists/" + currentPlaylist.getProperty() + "/pop").then(function(response){
+              $http.get("https://api.spotify.com/v1/tracks/" + response.data.active_song.spotify_id).then(function(resp){
+                audio.src = resp.data.preview_url;
+                supersonic.logger.info(audio.src + "First audio src is set.");
+                // audio.play();
+              });
+          });
+            
+            // supersonic.logger.info(audio.src);
+            // $http.get("https://api.spotify.com/v1/tracks/" + data.active_song.spotify_id).then(function(resp){
+            //   audio.src = resp.data.preview_url;
+            //   supersonic.logger.info(audio.src + "First audio src is set.");
+            //   audio.play();
+            // });
 
-          if(data.active_song == null || data.active_song.id != $scope.selected.id){
+            return;
+          }
+
+          $scope.songs = data.songs;
+          $scope.reloadSongs(playlist_id);
+
+          if($scope.selected != undefined && data.active_song.id != $scope.selected.id){
             $scope.selected = data.active_song;
             $http.get("https://api.spotify.com/v1/tracks/" + data.active_song.spotify_id).then(function(resp){
               audio.src = resp.data.preview_url;
-              supersonic.logger.info(audio.src);
+              supersonic.logger.info(audio.src + "audio src is set with active.");
               audio.play();
+              // $scope.player();
             });
           }
         })
@@ -284,7 +303,7 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
   for(var i=0; i<len; i++) upvotedSongList[i] = false;
   $scope.like = function(idx){
     if(!upvotedSongList[idx]){
-       $http.put("http://45.55.146.198:3000/songs/" +$scope.songs[idx].ID+"/upvote").success(function(response){
+       $http.put("http://45.55.146.198:3000/songs/" +$scope.songs[idx].id+"/upvote").success(function(response){
         $scope.songs = response.songs;
         len = response.songs.length;
         upvotedSongList[idx] = true;
@@ -296,7 +315,7 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
     supersonic.logger.info("clicked add song");
   }
 
-  audio.src = "https://p.scdn.co/mp3-preview/c58f1bc9160754337b858a4eb824a6ac2321041d";
+  // audio.src = "https://p.scdn.co/mp3-preview/c58f1bc9160754337b858a4eb824a6ac2321041d";
   $scope.player = function(){
     if($scope.play){
       $scope.play = false;
@@ -496,7 +515,7 @@ myapp.directive('tabset', function() {
             window.alert(String(new_song.title) + " is added to the Playlist with ID " + currentPlaylist.getProperty() + ".");
             $http.get("http://45.55.146.198:3000/playlists/" + playlist_id).then(function(response){
               queue.setProperty(response.data.songs);
-              supersonic.logger.info("Reloaded songs for playlist :" + playlist_name);
+              // supersonic.logger.info("Reloaded songs for playlist :" + playlist_name);
 
             }, function(response){
               supersonic.logger.error("ERROR Could not reload songs after add");

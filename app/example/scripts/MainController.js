@@ -86,6 +86,12 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching)
       $scope.songs = response.data.songs;
       $scope.selected = response.data.active_song;
 
+      $http.get("https://api.spotify.com/v1/tracks/" + response.data.active_song.spotify_id).then(function(resp){
+        audio.src = resp.data.preview_url;
+        supersonic.logger.info(audio.src);
+
+      });
+
       supersonic.logger.info("Joined playlist: " + playlist_name + " id: " + playlist_id);
       $scope.playlists[playlist_id] = playlist_name;
       currentPlaylist.setProperty(playlist_id);
@@ -106,6 +112,10 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching)
         $scope.songs = data.songs;
         if(data.active_song.id != $scope.selected.id){
           $scope.selected = data.active_song;
+          $http.get("https://api.spotify.com/v1/tracks/" + data.active_song.spotify_id).then(function(resp){
+            audio.src = resp.data.preview_url;
+            supersonic.logger.info(audio.src);
+          });
         }
       })
     }

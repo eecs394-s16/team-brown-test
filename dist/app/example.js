@@ -116,15 +116,34 @@ myapp.service('queue', function () {
       queue = newQueue;
       // window.alert(queue[0].title)
     }
-  }
-})
+  };
+});
+
+myapp.service('likes', function () {
+  // map playlist to lists
+  // list has each song the user has voted for so far
+  var likes = [];
+  return {
+    addPlaylist: function (playlist_id) {
+      likes[playlist_id] = [];
+    },
+    addLike: function (playlist_id, spotify_id) {
+      window.alert(spotify_id);
+      if(likes[playlist_id].indexOf(spotify_id) == -1) {
+        likes[playlist_id].push(spotify_id);
+        return true;
+      }
+      return false;
+    }
+  };
+});
 
 myapp.config(['$httpProvider', function ($httpProvider) {
   $httpProvider.defaults.useXDomain = true;
   delete $httpProvider.defaults.headers.common['X-Requested-With'];
 }]);
 
-myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching, queue){
+myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching, queue, likes){
 
   var len  = 0;
   $scope.playlists = {};
@@ -181,17 +200,18 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
       if (response.data.active_song != null){
          $scope.selected = response.data.active_song;
 
-<<<<<<< HEAD
-        $http.get("https://api.spotify.com/v1/tracks/" + response.data.active_song.spotify_id).then(function(resp){
-          audio.src = resp.data.preview_url;
-          successfullypersonic.logger.info(audio.src);
-=======
+      likes.addPlaylist(playlist_id);
+
+
       $http.get("https://api.spotify.com/v1/tracks/" + response.data.active_song.spotify_id).then(function(resp){
         audio.src = resp.data.preview_url;
         // supersonic.logger.info(audio.src);
->>>>>>> 33c9d47e1fe3db3f1b1d463970aa71eab5133c7d
 
-      });
+        $http.get("https://api.spotify.com/v1/tracks/" + response.data.active_song.spotify_id).then(function(resp){
+          audio.src = resp.data.preview_url;
+          successfullypersonic.logger.info(audio.src);
+
+        });
       }
 
       supersonic.logger.info("Joined playlist: " + playlist_name + " id: " + playlist_id);
@@ -218,16 +238,9 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
           $scope.selected = data.active_song;
           $http.get("https://api.spotify.com/v1/tracks/" + data.active_song.spotify_id).then(function(resp){
             audio.src = resp.data.preview_url;
-<<<<<<< HEAD
-            // supersonic.logger.info(audio.src);
-=======
+
             supersonic.logger.info(audio.src);
-<<<<<<< HEAD
-            // audio.play();
-=======
-            audio.play();
->>>>>>> 199e0e1eaff89768cdbc82c51961699ce0d19863
->>>>>>> 33c9d47e1fe3db3f1b1d463970aa71eab5133c7d
+
           });
         }
       })
@@ -245,6 +258,7 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
 
       $scope.songs = response.data.songs;
       $scope.selected = response.data.active_song;
+      likes.addPlaylist(playlist_id);
 
       supersonic.logger.info("Created playlist " + playlist_name + " id " + playlist_id);
       $scope.playlists[playlist_id] = playlist_name;
@@ -313,18 +327,29 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
     });
   }
 
-
-  var upvotedSongList = []
-  for(var i=0; i<len; i++) {upvotedSongList[i] = false;}
   $scope.like = function(idx){
-    if(!upvotedSongList[idx]){
-       $http.put("http://45.55.146.198:3000/songs/" +$scope.songs[idx].id+"/upvote").success(function(response){
+    var id;
+    for( i = 0; i < $scope.songs.length; i++) {
+      if($scope.songs[i].spotify_id == idx) {
+        id = i;
+        break;
+      }
+    }
+    var added = likes.addLike(currentPlaylist.getProperty(), idx);
+    if(added){
+       $http.put("http://45.55.146.198:3000/songs/" +$scope.songs[id].id+"/upvote").success(function(response){
         $scope.songs = response.songs;
+        queue.setProperty($scope.songs);
         len = response.songs.length;
-        upvotedSongList[idx] = true;
       })
     }
   }
+
+    $scope.$on("duplicateSong", function (event, idx) {
+      $scope.like(idx);
+    });
+
+  
 
   $scope.add = function() {
     supersonic.logger.info("clicked add song");
@@ -476,7 +501,7 @@ myapp.directive('tabset', function() {
   //           delete $httpProvider.defaults.headers.common['X-Requested-With'];
   //       }]);
 
-  myapp.controller("InstantSearchController",function($scope, $http, currentPlaylist, searching, queue){
+  myapp.controller("InstantSearchController",function($scope, $http, currentPlaylist, searching, queue, likes){
 
     $scope.searching = searching;
 
@@ -540,9 +565,9 @@ myapp.directive('tabset', function() {
             supersonic.logger.error("ERROR failed to add song: " + String(new_song.title));
           });
         } else {
-          window.alert(String(new_song.title) + " is already in playlist")
+          $scope.$emit("duplicateSong", new_song.spotify_id);
         }
-        
+
       }, function(response){
         supersonic.logger.error("ERROR failed to get spotify track: " + response.data);
       });

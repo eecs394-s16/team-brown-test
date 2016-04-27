@@ -126,6 +126,7 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
       // console.log(data.songs);
       $scope.$apply(function(){
         $scope.songs = data.songs;
+        queue.setProperty($scope.songs);
         if(data.active_song.id != $scope.selected.id){
           $scope.selected = data.active_song;
           $http.get("https://api.spotify.com/v1/tracks/" + data.active_song.spotify_id).then(function(resp){

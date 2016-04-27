@@ -53,11 +53,13 @@ myapp.service('likes', function () {
       likes[playlist_id] = [];
     },
     addLike: function (playlist_id, spotify_id) {
-      window.alert(spotify_id);
+      window.alert(likes[playlist_id] == null);
       if(likes[playlist_id].indexOf(spotify_id) == -1) {
+        window.alert("liking");
         likes[playlist_id].push(spotify_id);
         return true;
       }
+      window.alert("no");
       return false;
     }
   };
@@ -124,9 +126,6 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
       $scope.songs = response.data.songs;
       if (response.data.active_song != null){
         $scope.selected = response.data.active_song;
-
-        likes.addPlaylist(playlist_id);
-
         $http.get("https://api.spotify.com/v1/tracks/" + response.data.active_song.spotify_id).then(function(resp){
           audio.src = resp.data.preview_url;
           successfullypersonic.logger.info(audio.src);
@@ -137,6 +136,7 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
       $scope.playlists[playlist_id] = playlist_name;
       currentPlaylist.setProperty(playlist_id);
       queue.setProperty($scope.songs);
+      likes.addPlaylist(playlist_id);
       supersonic.logger.info("Current Playlist ID set to " + currentPlaylist.getProperty() + ".");
       window.alert(playlist_name + " joined.")
     }, function(response){
@@ -177,12 +177,12 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
 
       $scope.songs = response.data.songs;
       $scope.selected = response.data.active_song;
-      likes.addPlaylist(playlist_id);
 
       supersonic.logger.info("Created playlist " + playlist_name + " id " + playlist_id);
       $scope.playlists[playlist_id] = playlist_name;
       currentPlaylist.setProperty(playlist_id);
       queue.setProperty($scope.songs);
+      likes.addPlaylist(playlist_id);
       supersonic.logger.info("Current Playlist ID set to " + currentPlaylist.getProperty() + ".");
       window.alert(playlist_name + " created. Join ID: " + playlist_id);
 
@@ -484,6 +484,7 @@ myapp.directive('tabset', function() {
             supersonic.logger.error("ERROR failed to add song: " + String(new_song.title));
           });
         } else {
+          window.alert("Song is already in playlist");
           $scope.$emit("duplicateSong", new_song.spotify_id);
         }
 

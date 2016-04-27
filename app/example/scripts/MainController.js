@@ -55,7 +55,9 @@ myapp.service('likes', function () {
     addLike: function (playlist_id, spotify_id) {
       if(likes[playlist_id].indexOf(spotify_id) == -1) {
         likes.playlist_id.push(spotify_id);
+        return true;
       }
+      return false;
     }
   }
 })
@@ -230,12 +232,12 @@ myapp.controller("MainCtl",  function($scope, $http, currentPlaylist, searching,
   // var upvotedSongList = []
   // for(var i=0; i<len; i++) upvotedSongList[i] = false;
 
-  $scope.like = function(idx){
-    if(!upvotedSongList[idx]){
-       $http.put("http://45.55.146.198:3000/songs/" +$scope.songs[idx].id+"/upvote").success(function(response){
+  $scope.like = function(song_id){
+    var added = likes.addLike(currentPlaylist.getProperty, song_id);
+    if(added){
+       $http.put("http://45.55.146.198:3000/songs/" +song_id+"/upvote").success(function(response){
         $scope.songs = response.songs;
         len = response.songs.length;
-        upvotedSongList[idx] = true;
       })
     }
   }

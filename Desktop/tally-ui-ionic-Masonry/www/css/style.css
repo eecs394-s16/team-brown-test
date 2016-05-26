@@ -1,0 +1,234 @@
+/* Empty. Add your own CSS if you like */
+.item-thumbnail-top{
+	max-width: 185px;
+  height:auto;
+
+  padding:0;
+
+
+}
+
+.price-tag{
+  z-index:100;
+}
+
+.price{
+  width:35%;
+  float:left;
+  padding: 15px 0 0 5px;
+}
+.price-slider{
+  border: none;
+  padding: 15px 0;
+  width:60%;
+  float:left;
+}
+
+
+.item-thumbnail-top .item-content{
+  padding: 0 0 0 0;
+
+  }
+
+.drag-drop img{
+	width:100%;
+  z-index: 100;
+  height:auto;
+
+}
+.collection-items{
+  min-height: 500px;
+  height: 100%;
+}
+.item-thumbnail-col{
+	width:11em;
+	height:14em;
+	border:none;
+	background-color: #FFFFFF;
+	float:left;
+}
+
+.item-thumbnail-col-inside{
+	background-color: #FFFFFF;
+	vertical-align:center;
+}
+
+.item-thumbnail-col img{
+	width: 50%;
+	height: 4em;
+	margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+.item-details{
+	text-align: center;
+}
+
+.item-details-thumbnail {
+	height:auto;
+	width:auto;
+	max-height: 200px;
+	float:center;
+}
+/*Drag and drop test*/
+#outer-dropzone {
+  height: 140px;
+}
+
+#inner-dropzone {
+  height: 80px;
+}
+
+.dropzone {
+  background-color: #ccc;
+  border: dashed 4px transparent;
+  border-radius: 4px;
+  margin: 10px auto 30px;
+  padding: 10px;
+  width: 80%;
+  transition: background-color 0.3s;
+}
+
+.drop-active {
+  border-color: #aaa;
+}
+
+.drop-target {
+  background-color: #29e;
+  border-color: #fff;
+  border-style: solid;
+}
+
+.drag-drop {
+  display: inline-block;
+  min-width: 40px;
+   border: solid 1px #d3d3d3;
+  max-width: 185px;
+  color: #fff;
+  max-height: 600px;
+
+  -webkit-transform: translate(0px, 0px);
+          transform: translate(0px, 0px);
+
+  transition: background-color 0.3s;
+}
+
+.drag-drop.can-drop {
+  color: #000;
+  background-color: #4e4;
+}
+
+.card {
+  height: 30%;
+  width: 30%;
+}
+
+.header-logo{
+	width:25px;
+	height: 25px;
+	float:left;
+	margin-top: 8px;
+	margin-right:2px;
+}
+
+.header-title{
+	float: left;
+	width: 85px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.item-thumbnail-create{
+	border:none;
+	background-color: #FFFFFF;
+	width:11em;
+	height:14em;
+	float:left;
+}
+
+.item-thumbnail-create img{
+	width: 80%;
+	height: 80%;
+	margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.tally-logo {
+	margin-top: 0.4em;
+	vertical-align: center;
+	width:60px;
+	height:32px;
+}
+
+.login-background {
+	width: 100%;
+	height: 100%;
+	/*background-color: #C92228;*/
+	background-image: url("../img//tally-wordmark-gray.png");
+	background-size: 20% 10%;
+	background-position: 50% 70%;
+	background-repeat: no-repeat;
+}
+
+
+.errorInfo {
+	color: red;
+}
+
+.holding {
+	box-shadow: 10px 10px grey;
+}
+
+.spinner {
+  height: 60px;
+  width: 60px;
+  margin: 94px auto 0 auto;
+  position: relative;
+  -webkit-animation: rotation .6s infinite linear;
+  -moz-animation: rotation .6s infinite linear;
+  -o-animation: rotation .6s infinite linear;
+  animation: rotation .6s infinite linear;
+  border-left: 6px solid rgba(0, 174, 239, .15);
+  border-right: 6px solid rgba(0, 174, 239, .15);
+  border-bottom: 6px solid rgba(0, 174, 239, .15);
+  border-top: 6px solid rgba(0, 174, 239, .8);
+  border-radius: 100%;
+}
+
+@-webkit-keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+  }
+}
+
+@-moz-keyframes rotation {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(359deg);
+  }
+}
+
+@-o-keyframes rotation {
+  from {
+    -o-transform: rotate(0deg);
+  }
+  to {
+    -o-transform: rotate(359deg);
+  }
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}

@@ -1,0 +1,33 @@
+<ion-view view-title='<img class = "header-logo" src = "../img/tally-logo-white.png"></img><h4 class = header-title>&nbsp{{ collection.name }}<h3>'>
+
+	 <ion-nav-buttons side="secondary">
+      <button class="button" ng-click="showCollectionEdit()">
+        Edit
+      </button>
+      <button class="button" ng-click="reload()">
+        Reload
+      </button>
+    </ion-nav-buttons>
+    
+      <ion-header-bar ng-show="showHeaderBar" class="bar-subheader bar-positive">
+        <h1 class="title">My Collection</h1>
+      </ion-header-bar>
+
+      <ion-content id = "collection-items" class="has-header has-subheader">
+
+        <ion-item ng-repeat="item in items"
+                  href="#/app/collection/{{collectionId}}/{{item.id}}"
+                  class="item-thumbnail-top draggable drag-drop">
+
+          <img ng-src="{{ item.image.original.url }}">
+          <h2>{{ item.note }}</h2>
+        </ion-item>
+
+
+
+    <button class="button button-full button-positive" ng-click="import()">
+    		import a board
+  	</button>
+
+    </ion-content>
+</ion-view>

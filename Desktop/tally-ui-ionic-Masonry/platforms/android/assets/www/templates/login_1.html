@@ -1,0 +1,26 @@
+<ion-view>
+  <ion-content class="login-background">
+    <div class="login-form">
+      <form ng-submit="doLogin()">
+        <div class="list">
+          <label class="item item-input">
+            <!-- <span class="input">User Name</span> -->
+            <input type="text" placeholder="Username" ng-model="loginData.username">
+          </label>
+          <label class="item item-input">
+            <!-- <span class="input">Password</span> -->
+            <input type="password" placeholder="Password" ng-model="loginData.password">
+          </label>
+          <!-- <label class="item"> -->
+            <button class="button button-block button-positive" type="submit">Log In</button>
+          <!-- </label> -->
+        </div>
+      </form>
+    </div>
+    <div class="sign-up">
+      <button class="button button-outline button-positive" href="./sign-up.html">
+          Sign up for Tally
+      </button>
+    </div>
+  </ion-content>
+</ion-view>

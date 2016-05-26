@@ -1,0 +1,20 @@
+<ion-modal-view>
+	<ion-header-bar>
+		<h1 class="title">Edit Collection</h1>
+		<div class="buttons">
+			<button class="button button-clear" ng-click="hideCollectionEdit()">Close</button>
+		</div>
+	</ion-header-bar>
+	<ion-content>
+		<form ng-submit="editCollection()">
+			<div class="list">
+				<label class="item item-input">
+					<input type="text" placeholder="Name" ng-model="updatedCollection.name">
+				</label>
+				<label class="item">
+					<button class="button button-block button-positive" type="submit">Submit</button>
+				</label>
+			</div>
+		</form>
+	</ion-content>
+</ion-modal-view>

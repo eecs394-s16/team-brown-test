@@ -1,0 +1,32 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Edit Item</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="hideEdit()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <form ng-submit="editItem()">
+      <div class="list">
+        <label class="item item-input">
+          <input type="text" placeholder="Name" ng-model="updatedItem.name">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Price" ng-model="updatedItem.price">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Description" ng-model="updatedItem.note">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Image URL" ng-model="updatedItem.image.original.url">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Group" ng-model="updatedItem.group">
+        </label>
+        <label class="item">
+          <button class="button button-block button-positive" type="submit">Submit</button>
+        </label>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>

@@ -1,0 +1,21 @@
+<ion-view view-title="Collection3">
+  <ion-content>
+    <!-- <ion-list>
+      <ion-item ng-repeat="playlist in playlists" href="#/app/playlists/{{playlist.id}}">
+        {{playlist.title}}
+      </ion-item>
+    </ion-list> -->
+     <div class="list">
+
+        <a ng-repeat="item in items" 
+           class="item item-thumbnail-top"
+           href="#/app/playlists/{{item.id}}">
+
+          <img ng-src="{{ item.image.original.url }}">
+          <h2>{{ item.creator.first_name }} {{item.creator.last_name}}</h2>
+          <h4>{{ item.created_at }}</h4>
+        </a>
+
+      </div>
+  </ion-content>
+</ion-view>

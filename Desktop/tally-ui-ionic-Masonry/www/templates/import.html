@@ -1,0 +1,29 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Import Pinterest Board</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeImport2()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <h6 class="errorInfo">
+      {{errorInfo}}
+    </h6>
+    <form ng-submit="doImport2()">
+      <div class="list">
+        <label class="item item-input">
+          <input type="text" placeholder="Pinterest Username" ng-model="importData.username">
+        </label>
+        <label class="item item-input">
+          <!-- <span class="input-label">Description</span> -->
+          <input type="text" placeholder="Board Name" ng-model="importData.boardname">
+        </label>
+        <label class="item">
+          <button class="button button-block button-positive" type="submit">Submit</button>
+        </label>
+      </div>
+    </form>
+    <div class="spinner" ng-show="loading">
+  	</div>
+  </ion-content>
+</ion-modal-view>

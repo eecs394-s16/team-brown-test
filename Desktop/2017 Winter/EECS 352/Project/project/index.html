@@ -1,0 +1,62 @@
+<html>
+<head>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="jquery.csv.min.js"></script>
+<script type="text/javascript" src="app.js"></script>
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" />
+<link rel="stylesheet" href="rangeselect.css" />
+<style type="text/css">
+
+	.jumbotron {
+		background-color: #333;
+		color: #fff;
+	}
+
+	.jumbotron p {
+		color: #aaa;
+	}
+
+	.jumbotron a {
+		color: #fff;
+	}
+
+</style>
+</head>
+<body onload="startApp()">
+
+	<!-- Main jumbotron for a primary marketing message or call to action -->
+	<div class="jumbotron">
+		<div class="container">
+			<h2>Mood Picker Playlist</h2>
+			<h4>Ben Kalish, Susie Riley, Yi Zhang</h4>
+			<p>
+				Browse the sourcecode on <a href="https://github.com/MoodPlaylistPicker/moodplaylistpicker.github.io">GitHub</a>
+			</p>
+		</div>
+	</div>
+
+	<div class="container">
+		<!-- Example row of columns -->
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<h2>Energy: <span id="energy-val">50</span></h2>
+					<input type="range" id="energy-slider">
+					<h2>Valence: <span id="valence-val">50</span></h2>
+					<input type="range" id="valence-slider">
+				</div>
+				<p>
+					<button class="btn btn-lg btn-primary btn-success" id="generate">Generate Playlist</button>
+					<button class="btn btn-lg btn-primary btn-success" id="start">Add to Spotify</button>	
+				</p>
+				<!-- <div id="status"></div> -->
+			</div>
+			<div class="col-md-6">
+				<h2>Corresponding track names</h2>
+				<div id="debug"></div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
